@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Holdings</title>
+    <!-- <link rel="icon" type="image/x-icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <myheader></myheader>
+      <main>
+        <section
+          id="loginPage"
+          class="h-[100vh] w-full bg-cover bg-no-repeat bg-bottom"
+          style="background-image: url(../template/images/asset/bg-login.jpg)"
+        >
+          <div class="flex flex-wrap items-center justify-center h-full">
+            <div
+              class="relative max-w-[410px] max-sm:mx-4 w-full rounded-[12px] border border-solid border-[#f2f2f2] !bg-[#ffffff40] !backdrop-blur-md p-[16px_36px_32px] max-sm:p-[16px_16px_32px]"
+            >
+              <div class="logo max-w-[188px] mx-auto">
+                <img
+                  src="images/asset/logo.png"
+                  alt=""
+                  class="max-w-full w-full h-auto object-scale-down"
+                />
+              </div>
+
+              <div class="text-center mb-10">
+                <span
+                  class="text-[#e1e1e1] text-[14px] font-medium leading-normal block !mb-3"
+                >
+                  Hệ thống CRM An Holdings
+                </span>
+                <h3
+                  class="text-white !text-[20px] font-bold leading-normal uppercase !m-0"
+                >
+                  đăng nhập
+                </h3>
+              </div>
+
+              <form action="" id="loginForm">
+                <div class="block !mb-5">
+                  <span
+                    class="block mb-2 required text-[#e1e1e1] text-[16px] font-bold leading-normal"
+                  >
+                    Tên đăng nhập
+                  </span>
+
+                  <div class="input">
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Nhập tên đăng nhập"
+                      class="!rounded-[8px] border border-solid border-[#ededf6] p-2 !bg-[#ffffff40] placeholder:!text-[#E1E1E1] !text-[#fff] !text-[16px] placeholder:italic font-normal leading-normal w-full"
+                    />
+                  </div>
+                </div>
+
+                <div class="block mb-3">
+                  <span
+                    class="block mb-2 required text-[#e1e1e1] text-[16px] font-bold leading-normal"
+                  >
+                    Mật khẩu
+                  </span>
+
+                  <div class="input relative">
+                    <input
+                      type="password"
+                      name=""
+                      id=""
+                      placeholder="Nhập mật khẩu"
+                      class="inputPassword !rounded-[8px] border border-solid border-[#ededf6] p-2 !bg-[#ffffff40] placeholder:!text-[#E1E1E1] !text-[#fff] !text-[16px] placeholder:italic font-normal leading-normal w-full"
+                    />
+                    <button
+                      type="button"
+                      class="eye-toggle eye-toggle-hide inputTogglePassword"
+                    ></button>
+                  </div>
+                </div>
+
+                <div class="text-end mb-10">
+                  <a
+                    href=""
+                    class="inline-block !text-[#E1E1E1] !text-[16px] font-bold leading-normal hover:!text-[#18478d] transition"
+                  >
+                    Lấy lại mật khẩu
+                  </a>
+                </div>
+
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="inline-block text-white text-[16px] font-bold !rounded-[8px] !bg-[#3f8cfe] !p-[10px_24px] hover:!bg-[#18478d] transition"
+                  >
+                    Đăng nhập
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+      <myfooter></myfooter>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script src="js/vue3-sfc-loader.js"></script>
+    <script src="js/vuedefineasync.js"></script>
+    <script src="libs/jquery/jquery-3.7.1.min.js"></script>
+    <script src="libs/bootstrap/popper.min.js"></script>
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+
+    <script src="js/index.global.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+      Vue.createApp({
+        components: {
+          myheader: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/header.vue', options),
+          ),
+          myfooter: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/footer.vue', options),
+          ),
+        },
+        data() {
+          return {}
+        },
+        mounted() {
+          window.onload = () => {}
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

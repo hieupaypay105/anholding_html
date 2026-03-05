@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Holdings</title>
+    <!-- <link rel="icon" type="image/x-icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <myheader></myheader>
+      <main></main>
+      <myfooter></myfooter>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script src="js/vue3-sfc-loader.js"></script>
+    <script src="js/vuedefineasync.js"></script>
+    <script src="libs/jquery/jquery-3.7.1.min.js"></script>
+    <script src="libs/bootstrap/popper.min.js"></script>
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+
+    <script src="js/index.global.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+      Vue.createApp({
+        components: {
+          myheader: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/header.vue', options),
+          ),
+          myfooter: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/footer.vue', options),
+          ),
+        },
+        data() {
+          return {}
+        },
+        mounted() {
+          window.onload = () => {}
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: #fff;
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 16px;
+  color: black;
+}
+
+.container-index {
+  @include media-breakpoint-up(2xl) {
+    max-width: 1444px !important;
+  }
+}
+
+a,
+img {
+  transition: all 0.1s;
+
+  &:hover {
+    transition: all 0.1s;
+  }
+}
+
+button {
+  @include none-line();
+  padding: 0;
+}
+
+label.error {
+  color: red !important;
+}
+
+.currency {
+  &::after {
+    content: 'đ';
+    display: inline-block;
+    vertical-align: baseline;
+    color: currentColor;
+    text-decoration: underline;
+    text-transform: none;
+    margin-left: 4px;
+  }
+}
+
+.loader-fixed {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  .loader {
+    position: relative;
+    width: 45px;
+    aspect-ratio: 1;
+    --c: no-repeat linear-gradient(#a18b6499 0 0);
+    background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+    background-size: 20% 100%;
+    animation: l1 1s infinite linear;
+
+    &-overlay {
+      position: relative;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background: rgb(255 255 255 / 75%);
+        z-index: -1;
+      }
+    }
+  }
+  @keyframes l1 {
+    0% {
+      background-size: 20% 100%, 20% 100%, 20% 100%;
+    }
+    33% {
+      background-size: 20% 10%, 20% 100%, 20% 100%;
+    }
+    50% {
+      background-size: 20% 100%, 20% 10%, 20% 100%;
+    }
+    66% {
+      background-size: 20% 100%, 20% 100%, 20% 10%;
+    }
+    100% {
+      background-size: 20% 100%, 20% 100%, 20% 100%;
+    }
+  }
+}
+
+.title-global {
+  @include title-global();
+}
+
+.mixin-btn-global {
+  @include btn-global();
+}
+
+.required {
+  position: relative;
+
+  &::after {
+    content: '*';
+    display: inline-block;
+    color: #e61b1b;
+  }
+}

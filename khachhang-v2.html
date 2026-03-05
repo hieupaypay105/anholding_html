@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -13,6 +13,7 @@
       href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
     />
     <link href="js/dropzone.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs/flatpickr/flatpickr.min.css" />
     <link rel="stylesheet" href="css/style.min.css" />
   </head>
 
@@ -209,176 +210,271 @@
                 </h2>
               </div>
 
-              <!-- Search + Filters bar (theo cấu trúc banghang.html) -->
-              <div class="flex flex-wrap items-stretch !gap-3 !mb-2">
-                <div class="block max-md:grow">
-                  <div class="flex flex-wrap gap-3">
-                    <div
-                      class="dropdownFilterLg relative max-md:block hidden shrink-0"
+              <!-- Search + Filters bar -->
+              <div
+                class="khv2-filter-bar bg-white rounded-[12px] p-4 flex flex-wrap items-center gap-4 !mb-2 relative"
+              >
+                <!-- Box 1: Search + Filter -->
+                <div class="relative flex-1 min-w-[300px] h-[36px]">
+                  <div
+                    class="flex items-center h-full border border-[#ececec] rounded-[8px] bg-white w-full"
+                  >
+                    <!-- Search Input -->
+                    <span
+                      class="inline-flex items-center justify-center w-[36px] h-[36px] text-[#909090]"
                     >
-                      <button
-                        id="btnDropFilterLg"
-                        type="button"
-                        class="justify-center inline-flex items-center !rounded-[8px] !bg-white w-[36px] h-[36px]"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M11.2222 17.4444C14.6587 17.4444 17.4444 14.6587 17.4444 11.2222C17.4444 7.78578 14.6587 5 11.2222 5C7.78578 5 5 7.78578 5 11.2222C5 14.6587 7.78578 17.4444 11.2222 17.4444Z"
-                            stroke="#363636"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                          <path
-                            d="M19 19L15.6555 15.6555"
-                            stroke="#363636"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      </svg>
+                    </span>
+                    <input
+                      type="text"
+                      class="flex-1 border-0 outline-none text-[12px] text-[#363636] bg-transparent h-full px-1"
+                      placeholder="Tìm tên, số điện thoại khách hàng"
+                    />
 
-                    <div class="relative h-full">
-                      <div
-                        class="relative flex items-center bg-white border border-solid border-[#ececec] rounded-[8px] h-[36px] px-2"
+                    <!-- Divider -->
+                    <div class="w-[1px] h-full bg-[#ececec] mx-1"></div>
+
+                    <!-- Filter Button -->
+                    <button
+                      type="button"
+                      id="btnSearchFilter"
+                      class="inline-flex items-center gap-2 h-full px-3 shrink-0"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#363636"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       >
-                        <span
-                          class="inline-flex items-center justify-center w-[24px] h-[24px] overflow-hidden"
+                        <line x1="4" y1="21" x2="4" y2="14"></line>
+                        <line x1="4" y1="10" x2="4" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12" y2="3"></line>
+                        <line x1="20" y1="21" x2="20" y2="16"></line>
+                        <line x1="20" y1="12" x2="20" y2="3"></line>
+                        <line x1="1" y1="14" x2="7" y2="14"></line>
+                        <line x1="9" y1="8" x2="15" y2="8"></line>
+                        <line x1="17" y1="16" x2="23" y2="16"></line>
+                      </svg>
+                      <span class="text-[#363636] text-[12px] font-normal"
+                        >Bộ lọc</span
+                      >
+                    </button>
+                  </div>
+
+                  <!-- Filter Dropdown Panel -->
+                  <div
+                    id="dropdownSearchFilter"
+                    class="absolute top-full left-0 w-full bg-white border border-[#ececec] rounded-[8px] mt-1 z-[100] shadow-sm"
+                    style="display: none"
+                  >
+                    <div class="p-4 grid grid-cols-2 gap-x-4 gap-y-3">
+                      <!-- 8 Select/Input Fields -->
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Sale phụ trách</label
                         >
-                          <img
-                            src="images/asset/lucide_search.svg"
-                            alt=""
-                            class="w-[18px] h-[18px]"
-                          />
-                        </span>
-                        <input
-                          type="text"
-                          class="flex-1 border-0 outline-none text-[12px] text-[#363636] bg-transparent px-1"
-                          placeholder="Tìm tên, số điện thoại khách hàng"
-                        />
+                        <select
+                          id="filterSale"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Bùi Anh Tuấn"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Bùi Anh Tuấn</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Nguồn</label
+                        >
+                        <select
+                          id="filterNguon"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Youtube"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Youtube</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Nhóm KH</label
+                        >
+                        <select
+                          id="filterNhomKH"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Chuyển nhượng"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Chuyển nhượng</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Dự án</label
+                        >
+                        <select
+                          id="filterDuAn"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="OCP2"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">OCP2</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Phân khu</label
+                        >
+                        <select
+                          id="filterPhanKhu"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Chà là"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Chà là</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Loại hình</label
+                        >
+                        <select
+                          id="filterLoaiHinh"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Tứ lập"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Tứ lập</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Khoảng tài chính</label
+                        >
+                        <select
+                          id="filterTaiChinh"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="7-8 tỷ"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">7-8 tỷ</option>
+                        </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Tình trạng</label
+                        >
+                        <select
+                          id="filterTinhTrang"
+                          class="block-selector w-full"
+                          multiple="multiple"
+                          data-attr="Mới"
+                        >
+                          <option value="all">Tất cả</option>
+                          <option value="1">Mới</option>
+                        </select>
                       </div>
                     </div>
 
-                    <div class="relative h-full">
-                      <button
-                        type="button"
-                        id="btnFilters"
-                        class="btn-filters w-full justify-center inline-flex items-center gap-2 !rounded-[8px] !bg-white md:!p-[6px_24px] !h-full max-md:!w-[36px] max-md:!h-[36px]"
-                      >
-                        <img src="images/asset/icon-filter.svg" alt="" />
-                        <span class="text-[#363636] text-[14px] font-bold">
-                          Bộ lọc
-                        </span>
-                      </button>
-
-                      <div
-                        id="dropdownFilters"
-                        class="max-h-[300px] flex flex-col overflow-y-auto dropdown-filters absolute bg-white border border-solid border-[#ECECEC] rounded-[8px] min-w-[265px] p-2.5 z-100"
-                        style="display: none"
-                      >
-                        <div class="!mb-2.5">
-                          <span
-                            class="text-[#363636] text-[12px] font-bold !ps-5"
+                    <!-- Footer Actions -->
+                    <div
+                      class="bg-[#efefef] rounded-b-[8px] p-[10px] border-t border-[#ececec]"
+                    >
+                      <div class="flex flex-col gap-[7px]">
+                        <!-- Dòng 1: Text Tạo bộ lọc + Nút Áp dụng -->
+                        <div class="flex items-center justify-between mb-1">
+                          <button
+                            type="button"
+                            class="text-[#3f8cfe] !text-[12px] bg-transparent border-0 p-0 ml-2 hover:underline"
                           >
-                            Cài đặt hiển thị
-                          </span>
+                            Tạo bộ lọc
+                          </button>
+                          <button
+                            type="button"
+                            class="h-[28px] !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] border-0 outline-none flex items-center justify-center !py-[6px] !px-[12px]"
+                          >
+                            Áp dụng
+                          </button>
                         </div>
 
+                        <!-- Dòng 2: Input + Nút Tạo bộ lọc (Thường sẽ ẩn, nhưng hiện ra khi bấm nút trên, tạm để hiển thị luôn theo design) -->
                         <div
-                          class="border border-solid border-[#ECECEC] w-full"
+                          class="flex items-center bg-white rounded-[4px] border border-[#ededf6] overflow-hidden h-[28px]"
                         >
-                          <div
-                            class="item item-checked-all"
-                            onclick="(e) => e.stopPropagation()"
+                          <input
+                            type="text"
+                            placeholder="Nhập tên bộ lọc"
+                            class="flex-1 h-full !px-[8px] !text-[12px] !text-[#363636] placeholder:text-[#909090] border-0 outline-none bg-transparent"
+                          />
+                          <button
+                            type="button"
+                            class="h-full !px-[12px] !bg-[#3f8cfe] text-white !text-[12px] font-bold border-0 outline-none flex items-center justify-center shrink-0 !py-[6px]"
                           >
-                            <input
-                              type="checkbox"
-                              name=""
-                              id="checkedAllFilter"
-                            />
-                            <label
-                              for="checkedAllFilter"
-                              class="text-[#363636] text-[12px] font-normal"
-                            >
-                              Chọn tất cả
-                            </label>
-                          </div>
-                          <div
-                            class="item"
-                            onclick="(e) => e.stopPropagation()"
-                            v-for="(item,id) in filtersType"
-                            :key="id"
-                          >
-                            <input
-                              type="checkbox"
-                              name=""
-                              :id="'showID' + id"
-                            />
-                            <label
-                              :for="'showID' + id"
-                              class="text-[#363636] text-[12px] font-normal"
-                            >
-                              {{ item }}
-                            </label>
-                          </div>
+                            Tạo bộ lọc
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="inline-flex flex-wrap items-center gap-3 ms-auto">
-                  <div class="khv2-filters__item min-w-[220px]">
-                    <div
-                      class="flex items-center bg-white border border-solid border-[#ececec] rounded-[8px] h-[36px] px-2 gap-2"
-                    >
-                      <img src="images/asset/save.svg" alt="" />
-                      <span class="text-[12px] text-[#363636] flex-1">
-                        Bộ lọc đã lưu
-                      </span>
-                      <img
-                        src="images/asset/icon-park-solid_down-one.svg"
-                        alt=""
-                        class="w-[20px] h-[20px]"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="khv2-filters__item min-w-[180px]">
-                    <div
-                      class="flex items-center bg-white border border-solid border-[#ececec] rounded-[8px] h-[36px] px-2 gap-2"
-                    >
-                      <img src="images/asset/clock.svg" alt="" />
-                      <span class="text-[12px] text-[#363636] flex-1">
-                        Tất cả
-                      </span>
-                      <img
-                        src="images/asset/icon-park-solid_down-one.svg"
-                        alt=""
-                        class="w-[20px] h-[20px]"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    class="!inline-flex !items-center !bg-[#3F8CFE] !rounded-[8px] md:!gap-1 md:!p-[6px_12px] !p-[6px_4px]"
-                    data-bs-target="#modalAdminAdding"
-                    data-bs-toggle="modal"
+                <!-- Box 2: Saved Filters -->
+                <div class="relative flex-1 min-w-[200px] h-[36px]">
+                  <select
+                    id="filterSavedFilters"
+                    class="block-selector w-full"
+                    multiple="multiple"
+                    data-attr="Bộ lọc đã lưu"
                   >
-                    <img src="images/asset/si_add-fill.svg" alt="" />
-                    <span class="!text-white !text-[14px] !font-bold">
-                      Thêm mới
-                    </span>
-                  </button>
+                    <option value="all">Tất cả</option>
+                    <option value="1">Dữ liệu 06/06/2025 12:30:22</option>
+                    <option value="2">Dữ liệu 06/06/2025 12:30:22</option>
+                    <option value="3">Dữ liệu 06/06/2025 12:30:22</option>
+                    <option value="4">Dữ liệu 06/06/2025 12:30:22</option>
+                  </select>
+                </div>
+
+                <!-- Box 3: Time Period -->
+                <div class="relative flex-1 min-w-[150px] h-[36px]">
+                  <select
+                    id="filterTimePeriod"
+                    class="block-selector w-full"
+                    multiple="multiple"
+                    data-attr="Tất cả"
+                  >
+                    <option value="all">Tất cả</option>
+                    <option value="hom-qua">Hôm qua</option>
+                    <option value="hom-nay">Hôm nay</option>
+                    <option value="tuan-truoc">Tuần trước</option>
+                    <option value="thang-nay">Tháng này</option>
+                    <option value="thang-truoc">Tháng trước</option>
+                  </select>
                 </div>
               </div>
 
@@ -386,65 +482,261 @@
               <div class="h-full flex flex-col">
                 <!-- Status chips -->
                 <div
-                  class="khv2-status flex flex-wrap items-center gap-2 !mb-3"
+                  class="khv2-status flex flex-wrap lg:flex-nowrap items-center gap-2 !mb-3 w-full"
                 >
-                  <button
-                    type="button"
-                    id="btnStatusDisplay"
-                    class="inline-flex items-center gap-1 bg-white rounded-[8px] h-[36px] px-3 text-[14px] text-[#363636] font-bold"
-                  >
-                    Hiển thị
-                    <img
-                      src="images/asset/icon-filter.svg"
-                      alt=""
-                      class="w-[18px] h-[18px]"
-                    />
-                  </button>
+                  <div class="relative h-full shrink-0">
+                    <button
+                      type="button"
+                      id="btnStatusDisplay"
+                      class="btn-filters w-full justify-center inline-flex items-center gap-2 !rounded-[8px] !bg-white md:!px-3 !h-[36px] max-md:!w-[36px] max-md:!h-[36px]"
+                    >
+                      <img
+                        src="images/asset/icon-filter.svg"
+                        alt=""
+                        class="w-[18px] h-[18px]"
+                      />
+                      <span
+                        class="text-[#363636] text-[14px] font-bold max-md:hidden"
+                      >
+                        Hiển thị
+                      </span>
+                    </button>
 
-                  <div
-                    class="flex items-center gap-2 overflow-x-auto khv2-status__chips"
-                  >
-                    <button type="button" class="khv2-chip khv2-chip--green">
-                      Mới
+                    <div
+                      id="dropdownStatusDisplay"
+                      class="max-h-[300px] flex flex-col overflow-y-auto dropdown-filters absolute bg-white border border-solid border-[#ECECEC] rounded-[8px] min-w-[265px] p-2.5 z-100"
+                      style="display: none; top: 100%; left: 0; margin-top: 4px"
+                    >
+                      <div class="!mb-2.5">
+                        <span
+                          class="text-[#363636] text-[12px] font-bold !ps-5"
+                        >
+                          Cài đặt hiển thị
+                        </span>
+                      </div>
+
+                      <div class="border border-solid border-[#ECECEC] w-full">
+                        <div
+                          class="item item-checked-all"
+                          onclick="(e) => e.stopPropagation()"
+                        >
+                          <input
+                            type="checkbox"
+                            name=""
+                            id="checkedAllStatusFilter"
+                          />
+                          <label
+                            for="checkedAllStatusFilter"
+                            class="text-[#363636] text-[12px] font-normal"
+                          >
+                            Chọn tất cả
+                          </label>
+                        </div>
+                        <div
+                          class="item"
+                          onclick="(e) => e.stopPropagation()"
+                          v-for="(item,id) in filtersType"
+                          :key="id"
+                        >
+                          <input
+                            type="checkbox"
+                            name=""
+                            :id="'showStatusID' + id"
+                          />
+                          <label
+                            :for="'showStatusID' + id"
+                            class="text-[#363636] text-[12px] font-normal"
+                          >
+                            {{ item }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex-1 min-w-0 relative flex items-center gap-2">
+                    <button
+                      type="button"
+                      class="swiper-btn-prev shrink-0 bg-white border border-[#ECECEC] rounded-[4px] w-[24px] h-[24px] flex items-center justify-center cursor-pointer transition-colors hover:bg-gray-50"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 13L5 8L10 3"
+                          stroke="#909090"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </button>
-                    <button type="button" class="khv2-chip khv2-chip--cyan">
-                      Đang tiếp cận
-                      <span class="khv2-chip__badge">22</span>
+
+                    <div
+                      class="swiper swiper-status-chips w-full overflow-hidden py-[5px]"
+                    >
+                      <div
+                        class="swiper-wrapper flex items-center khv2-status__chips !gap-0 !pr-2 py-[5px]"
+                      >
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--green"
+                          >
+                            Mới
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--cyan"
+                          >
+                            Đang tiếp cận
+                            <span
+                              class="khv2-chip__badge !absolute !-top-[6px] !-right-[8px] !text-[10px] !font-normal !z-10"
+                              >22</span
+                            >
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--blue"
+                          >
+                            Đang tư vấn
+                            <span
+                              class="khv2-chip__badge !absolute !-top-[6px] !-right-[8px] !text-[10px] !font-normal !z-10"
+                              >22</span
+                            >
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--orange"
+                          >
+                            Tiềm năng
+                            <span
+                              class="khv2-chip__badge !absolute !-top-[6px] !-right-[8px] !text-[10px] !font-normal !z-10"
+                              >22</span
+                            >
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--teal"
+                          >
+                            Đang hẹn gặp
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--indigo"
+                          >
+                            Đã hẹn
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--grey"
+                          >
+                            Nghiên cứu tiếp/Chờ
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--pink"
+                          >
+                            Nóng
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--red"
+                          >
+                            Chốt
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--magenta"
+                          >
+                            Mua tiếp
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--dark"
+                          >
+                            Dừng mua
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--darkgrey"
+                          >
+                            Mua bên khác
+                          </button>
+                        </div>
+                        <div class="swiper-slide !w-auto !overflow-visible">
+                          <button
+                            type="button"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--lime"
+                          >
+                            Mua dự án khác
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="swiper-btn-next shrink-0 bg-white border border-[#ECECEC] rounded-[4px] w-[24px] h-[24px] flex items-center justify-center cursor-pointer transition-colors hover:bg-gray-50"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 13L11 8L6 3"
+                          stroke="#909090"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </button>
-                    <button type="button" class="khv2-chip khv2-chip--blue">
-                      Đang tư vấn
-                      <span class="khv2-chip__badge">22</span>
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--orange">
-                      Tiềm năng
-                      <span class="khv2-chip__badge">22</span>
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--teal">
-                      Đang hẹn gặp
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--indigo">
-                      Đã hẹn
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--grey">
-                      Nghiên cứu tiếp/Chờ
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--pink">
-                      Nóng
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--red">
-                      Chốt
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--magenta">
-                      Mua tiếp
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--dark">
-                      Dừng mua
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--darkgrey">
-                      Mua bên khác
-                    </button>
-                    <button type="button" class="khv2-chip khv2-chip--lime">
-                      Mua dự án khác
+                  </div>
+
+                  <div class="shrink-0 h-full">
+                    <button
+                      type="button"
+                      class="w-full justify-center inline-flex items-center gap-2 !rounded-[8px] !bg-[#3F8CFE] md:!px-3 !h-[36px] max-md:!w-[36px] max-md:!h-[36px] hover:!bg-[#18478D] transition-colors border-none"
+                    >
+                      <img
+                        src="images/asset/si_add-fill.svg"
+                        alt=""
+                        class="w-[20px] h-[20px] max-md:w-[24px] max-md:h-[24px]"
+                      />
+                      <span
+                        class="text-white text-[14px] font-bold max-md:hidden"
+                        >Thêm mới</span
+                      >
                     </button>
                   </div>
                 </div>
@@ -454,7 +746,7 @@
                   id="tableMagic"
                   class="table-magic max-md:mb-4 grow flex flex-col"
                 >
-                  <div class="table-container relative overflow-auto">
+                  <div class="table-container relative">
                     <!-- Header row -->
                     <div
                       id="tableRowHeader"
@@ -522,9 +814,8 @@
                           alt=""
                         />
                       </div>
-                      <div
-                        class="cell edit font-bold text-[#363636] justify-center"
-                      >
+                      <!-- edit -->
+                      <div class="cell font-bold text-[#363636] justify-center">
                         Edit
                       </div>
                     </div>
@@ -532,7 +823,7 @@
                     <!-- Body -->
                     <div
                       id="tableRowBody"
-                      class="table-row body bg-white border border-[#c8c8c8] rounded-[8px] !max-h-none"
+                      class="table-row body bg-white border border-[#c8c8c8] rounded-[8px] overflow-y-auto overflow-x-hidden !max-h-[600px]"
                     >
                       <!-- Row 1 -->
                       <div
@@ -569,9 +860,9 @@
                         class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
                         style="display: none"
                       >
-                        <!-- Left Details Form -->
+                        <!-- Left Details Form (theo form Figma) -->
                         <div
-                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6]"
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
                         >
                           <div class="grid grid-cols-2 gap-4">
                             <!-- Họ và tên -->
@@ -580,13 +871,11 @@
                                 >Họ và tên
                                 <span class="text-[#e61b1b]">*</span></label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Nguyễn Đức Hiếu</span
-                                >
-                              </div>
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                                value="Nguyễn Đức Hiếu"
+                              />
                             </div>
                             <!-- Số điện thoại -->
                             <div class="col-span-1 flex flex-col gap-1">
@@ -594,163 +883,180 @@
                                 >Số điện thoại
                                 <span class="text-[#e61b1b]">*</span></label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >0904 444 555</span
-                                >
-                              </div>
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                                value="0904 444 555"
+                              />
                             </div>
                             <!-- Email -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Email</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >duchieu@gmail.com</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                                value="duchieu@gmail.com"
+                              />
                             </div>
-                            <!-- Tỉnh/ Thành -->
+                            <!-- Tỉnh/ Thành (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Tỉnh/ Thành
                                 <span class="text-[#e61b1b]">*</span></label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailTinhThanh"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Hà Nội"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Hà Nội</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="hn">Hà Nội</option>
+                              </select>
                             </div>
-                            <!-- Nhóm KH -->
+                            <!-- Nhóm KH (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Nhóm KH</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailNhomKH"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Chuyển nhượng"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Chuyển nhượng</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="chuyen-nhuong">
+                                  Chuyển nhượng
+                                </option>
+                              </select>
                             </div>
-                            <!-- Dự án -->
+                            <!-- Dự án (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Dự án</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailDuAn"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="OCP2"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >OCP2</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="ocp2">OCP2</option>
+                              </select>
                             </div>
-                            <!-- Phân khu -->
+                            <!-- Phân khu (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Phân khu</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailPhanKhu"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Chà là"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Chà là</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="cha-la">Chà là</option>
+                              </select>
                             </div>
-                            <!-- Loại hình -->
+                            <!-- Loại hình (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Loại hình</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailLoaiHinh"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Tứ lập"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Tứ lập</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="tu-lap">Tứ lập</option>
+                              </select>
                             </div>
-                            <!-- Khoảng tài chính -->
+                            <!-- Khoảng tài chính (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Khoảng tài chính</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailTaiChinh"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="7-8 tỷ"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >7-8 tỷ</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="7-8-ty">7-8 tỷ</option>
+                              </select>
                             </div>
-                            <!-- Tình trạng -->
+                            <!-- Tình trạng (Select2 multiple) -->
                             <div class="col-span-1 flex flex-col gap-1">
                               <label class="text-[12px] text-[#363636]"
                                 >Tình trạng</label
                               >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
+                              <select
+                                id="detailTinhTrang"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Mới"
                               >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Mới</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
+                                <option value="moi">Mới</option>
+                              </select>
+                            </div>
+                            <!-- Lịch tương tác -->
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Lịch tương tác</label
+                              >
+                              <input
+                                type="text"
+                                id="detailLichTuongTac"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                                placeholder="Chọn ngày"
+                              />
+                            </div>
+                            <!-- Nguồn (Select2 multiple) -->
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Nguồn</label
+                              >
+                              <select
+                                id="detailNguon"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Youtube"
+                              >
+                                <option value="youtube">Youtube</option>
+                              </select>
+                            </div>
+                            <!-- Sale phụ trách (Select2 multiple) -->
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Sale phụ trách</label
+                              >
+                              <select
+                                id="detailSale"
+                                class="block-selector w-full h-[40px]"
+                                multiple="multiple"
+                                data-attr="Bùi Anh Tuấn"
+                              >
+                                <option value="bui-anh-tuan">
+                                  Bùi Anh Tuấn
+                                </option>
+                              </select>
+                            </div>
+                            <!-- Ghi chú -->
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none resize-none"
+                                placeholder=""
+                              ></textarea>
                             </div>
                           </div>
                         </div>
 
-                        <!-- Right Chat Box -->
+                        <!-- Right Chat Box (theo frame Figma) -->
                         <div
                           class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
                         >
@@ -760,681 +1066,250 @@
                             Trao đổi
                           </div>
 
-                          <!-- Chat history -->
-                          <div
-                            class="bg-[#fafafa] border border-[#ededf6] rounded-[8px] flex-grow flex flex-col p-4 gap-4 h-[162px] overflow-y-auto mb-3"
-                          >
-                            <!-- Message 1 -->
-                            <div class="flex gap-2">
-                              <div
-                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                              >
-                                HN
-                              </div>
-                              <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                  <span
-                                    class="text-[#184296] text-[12px] font-bold"
-                                    >Nguyễn Đức Hiếu</span
-                                  >
-                                  <span class="text-[#909090] text-[10px]"
-                                    >02/03/2025 12:00</span
-                                  >
-                                </div>
-                                <p class="text-[#363636] text-[12px] m-0">
-                                  Contrary to popular belief, Lorem Ipsum is not
-                                  simply random text. It has roots in a piece of
-                                  classical Latin literature from 45 BC, making
-                                  it over 2000 years old
-                                </p>
-                              </div>
-                            </div>
-
-                            <hr class="border-[#ededf6] m-0" />
-
-                            <!-- Message 2 -->
-                            <div class="flex gap-2">
-                              <div
-                                class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                              >
-                                TB
-                              </div>
-                              <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                  <span
-                                    class="text-[#184296] text-[12px] font-bold"
-                                    >Bùi Anh Tuấn</span
-                                  >
-                                  <span class="text-[#909090] text-[10px]"
-                                    >02/03/2025 12:00</span
-                                  >
-                                </div>
-                                <p class="text-[#363636] text-[12px] m-0">
-                                  Contrary to popular belief
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
                           <!-- Chat input -->
-                          <div
-                            class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 flex flex-col relative min-h-[103px]"
-                          >
-                            <textarea
-                              class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
-                              placeholder="Nhập nội dung trao đổi..."
-                            ></textarea>
-                            <div class="mt-auto text-right">
-                              <button
-                                type="button"
-                                class="bg-[#3f8cfe] text-white text-[12px] font-bold rounded-[4px] px-4 py-1"
-                              >
-                                Gửi
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Row 2 -->
-                      <div
-                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
-                      >
-                        <div class="cell">01</div>
-                        <div class="cell">Nguyễn Đức Hiếu</div>
-                        <div class="cell">0904 444 555</div>
-                        <div class="cell">duchieu@gmail.com</div>
-                        <div class="cell">Hà Nội</div>
-                        <div class="cell">Chuyển nhượng</div>
-                        <div class="cell">OCP2</div>
-                        <div class="cell">Chà là</div>
-                        <div class="cell">Tứ lập</div>
-                        <div class="cell">7-8 tỷ</div>
-                        <div class="cell">
-                          <span
-                            class="inline-flex items-center justify-center bg-[#c4ffd0] border border-[#12f13e] text-[#00841a] text-[10px] rounded-[24px] px-2 h-[18px]"
-                            >Mới</span
-                          >
-                        </div>
-                        <div
-                          class="cell edit edit-body justify-center opacity-40"
-                        >
-                          <button type="button" class="cell-btn-edit">
-                            <img src="images/asset/svg-edit.svg" alt="" />
-                          </button>
-                          <button type="button" class="cell-btn-delete">
-                            <img src="images/asset/svg-delete.svg" alt="" />
-                          </button>
-                        </div>
-                      </div>
-
-                      <!-- Detail Accordion Content -->
-                      <div
-                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
-                        style="display: none"
-                      >
-                        <!-- Left Details Form -->
-                        <div
-                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6]"
-                        >
-                          <div class="grid grid-cols-2 gap-4">
-                            <!-- Họ và tên -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Họ và tên
-                                <span class="text-[#e61b1b]">*</span></label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Nguyễn Đức Hiếu</span
-                                >
-                              </div>
-                            </div>
-                            <!-- Số điện thoại -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Số điện thoại
-                                <span class="text-[#e61b1b]">*</span></label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >0904 444 555</span
-                                >
-                              </div>
-                            </div>
-                            <!-- Email -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Email</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >duchieu@gmail.com</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Tỉnh/ Thành -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Tỉnh/ Thành
-                                <span class="text-[#e61b1b]">*</span></label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Hà Nội</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Nhóm KH -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Nhóm KH</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Chuyển nhượng</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Dự án -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Dự án</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >OCP2</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Phân khu -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Phân khu</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Chà là</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Loại hình -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Loại hình</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Tứ lập</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Khoảng tài chính -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Khoảng tài chính</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >7-8 tỷ</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                            <!-- Tình trạng -->
-                            <div class="col-span-1 flex flex-col gap-1">
-                              <label class="text-[12px] text-[#363636]"
-                                >Tình trạng</label
-                              >
-                              <div
-                                class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                              >
-                                <span class="text-[#909090] text-[12px]"
-                                  >Mới</span
-                                >
-                                <img
-                                  src="images/asset/icon-park-solid_down-one.svg"
-                                  class="w-4 h-4 opacity-50"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Right Chat Box -->
-                        <div
-                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
-                        >
-                          <div
-                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
-                          >
-                            Trao đổi
-                          </div>
-
-                          <!-- Chat history -->
-                          <div
-                            class="bg-[#fafafa] border border-[#ededf6] rounded-[8px] flex-grow flex flex-col p-4 gap-4 h-[162px] overflow-y-auto mb-3"
-                          >
-                            <!-- Message 1 -->
-                            <div class="flex gap-2">
-                              <div
-                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                              >
-                                HN
-                              </div>
-                              <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                  <span
-                                    class="text-[#184296] text-[12px] font-bold"
-                                    >Nguyễn Đức Hiếu</span
-                                  >
-                                  <span class="text-[#909090] text-[10px]"
-                                    >02/03/2025 12:00</span
-                                  >
-                                </div>
-                                <p class="text-[#363636] text-[12px] m-0">
-                                  Contrary to popular belief, Lorem Ipsum is not
-                                  simply random text. It has roots in a piece of
-                                  classical Latin literature from 45 BC, making
-                                  it over 2000 years old
-                                </p>
-                              </div>
-                            </div>
-
-                            <hr class="border-[#ededf6] m-0" />
-
-                            <!-- Message 2 -->
-                            <div class="flex gap-2">
-                              <div
-                                class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                              >
-                                TB
-                              </div>
-                              <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                  <span
-                                    class="text-[#184296] text-[12px] font-bold"
-                                    >Bùi Anh Tuấn</span
-                                  >
-                                  <span class="text-[#909090] text-[10px]"
-                                    >02/03/2025 12:00</span
-                                  >
-                                </div>
-                                <p class="text-[#363636] text-[12px] m-0">
-                                  Contrary to popular belief
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- Chat input -->
-                          <div
-                            class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 flex flex-col relative min-h-[103px]"
-                          >
-                            <textarea
-                              class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
-                              placeholder="Nhập nội dung trao đổi..."
-                            ></textarea>
-                            <div class="mt-auto text-right">
-                              <button
-                                type="button"
-                                class="bg-[#3f8cfe] text-white text-[12px] font-bold rounded-[4px] px-4 py-1"
-                              >
-                                Gửi
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Row 3 -->
-                      <div
-                        class="table-item justify-between bg-[#fafafa] !border-b-0"
-                      >
-                        <div class="cell">01</div>
-                        <div class="cell">Nguyễn Đức Hiếu</div>
-                        <div class="cell">0904 444 555</div>
-                        <div class="cell">duchieu@gmail.com</div>
-                        <div class="cell">Hà Nội</div>
-                        <div class="cell">Chuyển nhượng</div>
-                        <div class="cell">OCP2</div>
-                        <div class="cell">Chà là</div>
-                        <div class="cell">Tứ lập</div>
-                        <div class="cell">7-8 tỷ</div>
-                        <div class="cell">
-                          <span
-                            class="inline-flex items-center justify-center bg-[#c4ffd0] border border-[#12f13e] text-[#00841a] text-[10px] rounded-[24px] px-2 h-[18px]"
-                            >Mới</span
-                          >
-                        </div>
-                        <div class="cell edit edit-body justify-center">
-                          <button type="button" class="cell-btn-edit">
-                            <img src="images/asset/svg-edit.svg" alt="" />
-                          </button>
-                          <button type="button" class="cell-btn-delete">
-                            <img src="images/asset/svg-delete.svg" alt="" />
-                          </button>
-                        </div>
-                        <!-- Detail Accordion Content -->
-                        <div
-                          class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
-                          style="display: none"
-                        >
-                          <!-- Left Details Form -->
-                          <div
-                            class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6]"
-                          >
-                            <div class="grid grid-cols-2 gap-4">
-                              <!-- Họ và tên -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Họ và tên
-                                  <span class="text-[#e61b1b]">*</span></label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Nguyễn Đức Hiếu</span
-                                  >
-                                </div>
-                              </div>
-                              <!-- Số điện thoại -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Số điện thoại
-                                  <span class="text-[#e61b1b]">*</span></label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >0904 444 555</span
-                                  >
-                                </div>
-                              </div>
-                              <!-- Email -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Email</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >duchieu@gmail.com</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Tỉnh/ Thành -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Tỉnh/ Thành
-                                  <span class="text-[#e61b1b]">*</span></label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Hà Nội</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Nhóm KH -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Nhóm KH</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Chuyển nhượng</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Dự án -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Dự án</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >OCP2</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Phân khu -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Phân khu</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Chà là</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Loại hình -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Loại hình</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Tứ lập</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Khoảng tài chính -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Khoảng tài chính</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >7-8 tỷ</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <!-- Tình trạng -->
-                              <div class="col-span-1 flex flex-col gap-1">
-                                <label class="text-[12px] text-[#363636]"
-                                  >Tình trạng</label
-                                >
-                                <div
-                                  class="bg-[#fcfcff] border border-[#ededf6] rounded-[8px] h-[30px] flex items-center px-3 justify-between"
-                                >
-                                  <span class="text-[#909090] text-[12px]"
-                                    >Mới</span
-                                  >
-                                  <img
-                                    src="images/asset/icon-park-solid_down-one.svg"
-                                    class="w-4 h-4 opacity-50"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- Right Chat Box -->
-                          <div
-                            class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
-                          >
+                          <div class="mb-3">
                             <div
-                              class="text-[#3f8cfe] text-[12px] font-normal mb-3"
-                            >
-                              Trao đổi
-                            </div>
-
-                            <!-- Chat history -->
-                            <div
-                              class="bg-[#fafafa] border border-[#ededf6] rounded-[8px] flex-grow flex flex-col p-4 gap-4 h-[162px] overflow-y-auto mb-3"
-                            >
-                              <!-- Message 1 -->
-                              <div class="flex gap-2">
-                                <div
-                                  class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                                >
-                                  HN
-                                </div>
-                                <div>
-                                  <div class="flex items-center gap-2 mb-1">
-                                    <span
-                                      class="text-[#184296] text-[12px] font-bold"
-                                      >Nguyễn Đức Hiếu</span
-                                    >
-                                    <span class="text-[#909090] text-[10px]"
-                                      >02/03/2025 12:00</span
-                                    >
-                                  </div>
-                                  <p class="text-[#363636] text-[12px] m-0">
-                                    Contrary to popular belief, Lorem Ipsum is
-                                    not simply random text. It has roots in a
-                                    piece of classical Latin literature from 45
-                                    BC, making it over 2000 years old
-                                  </p>
-                                </div>
-                              </div>
-
-                              <hr class="border-[#ededf6] m-0" />
-
-                              <!-- Message 2 -->
-                              <div class="flex gap-2">
-                                <div
-                                  class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                                >
-                                  TB
-                                </div>
-                                <div>
-                                  <div class="flex items-center gap-2 mb-1">
-                                    <span
-                                      class="text-[#184296] text-[12px] font-bold"
-                                      >Bùi Anh Tuấn</span
-                                    >
-                                    <span class="text-[#909090] text-[10px]"
-                                      >02/03/2025 12:00</span
-                                    >
-                                  </div>
-                                  <p class="text-[#363636] text-[12px] m-0">
-                                    Contrary to popular belief
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Chat input -->
-                            <div
-                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 flex flex-col relative min-h-[103px]"
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
                             >
                               <textarea
                                 class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
                                 placeholder="Nhập nội dung trao đổi..."
                               ></textarea>
-                              <div class="mt-auto text-right">
-                                <button
-                                  type="button"
-                                  class="bg-[#3f8cfe] text-white text-[12px] font-bold rounded-[4px] px-4 py-1"
-                                >
-                                  Gửi
-                                </button>
+                            </div>
+
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Chat history -->
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <!-- Message 1 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                HN
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Nguyễn Đức Hiếu</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 12:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Contrary to popular belief, Lorem Ipsum is not
+                                  simply random text. It has roots in a piece of
+                                  classical Latin literature from 45 BC, making
+                                  it over 2000 years old
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 2 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                TB
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Bùi Anh Tuấn</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 12:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Contrary to popular belief
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 3 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#00B69B] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                LT
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Lê Thị Mai</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 13:15</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Tôi đã xem qua thông tin dự án và rất quan tâm
+                                  đến căn hộ tứ lập. Có thể sắp xếp lịch xem nhà
+                                  vào cuối tuần này không?
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 4 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                HN
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Nguyễn Đức Hiếu</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 13:30</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Chào chị Mai, tôi sẽ kiểm tra lịch và liên hệ
+                                  lại với chị trong vòng 1 giờ để xác nhận thời
+                                  gian phù hợp nhất.
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 5 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#F6A723] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                PV
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Phạm Văn Đức</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 14:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Khách hàng này có tiềm năng cao, nên ưu tiên
+                                  xử lý. Tôi sẽ chuẩn bị hồ sơ và tài liệu liên
+                                  quan.
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 6 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                TB
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Bùi Anh Tuấn</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 14:20</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Đã cập nhật trạng thái khách hàng thành "Đang
+                                  hẹn gặp". Nhớ follow up sau khi xem nhà.
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 7 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                HN
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Nguyễn Đức Hiếu</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 15:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Đã xác nhận lịch hẹn với khách hàng vào Chủ
+                                  nhật 05/03/2025 lúc 9:00 sáng. Địa điểm: Văn
+                                  phòng dự án OCP2.
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="h-px w-full bg-[#ededf6]"></div>
+
+                            <!-- Message 8 -->
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#00B69B] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                LT
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Lê Thị Mai</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >02/03/2025 15:30</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Cảm ơn anh Hiếu, tôi sẽ có mặt đúng giờ. Mong
+                                  được tư vấn chi tiết về căn hộ và các chính
+                                  sách ưu đãi hiện tại.
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -1685,45 +1560,6 @@
     <script defer src="js/main.js"></script>
 
     <script>
-      Vue.createApp({
-        data() {
-          return {
-            filtersType: [
-              'Phân khu',
-              'Mã căn',
-              'Loại hình',
-              'TTBG',
-              'Hướng',
-              'KT đất',
-              'DT đất',
-              'DTXD',
-            ],
-            menuData: [
-              {
-                icon: 'images/asset/akar-icons_dashboard.svg',
-                title: 'Dashboard',
-              },
-              {
-                icon: 'images/asset/fluent_table-multiple-20-filled.svg',
-                title: 'Bảng hàng',
-                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
-              },
-              {
-                icon: 'images/asset/ix_customer.svg',
-                title: 'Khách hàng',
-                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
-              },
-              {
-                icon: 'images/asset/dashicons_admin-generic.svg',
-                title: 'Quản trị',
-              },
-            ],
-          }
-        },
-      }).mount('#app')
-    </script>
-
-    <script>
       $(document).ready(function () {
         $('.table-item')
           .css('cursor', 'pointer')
@@ -1770,14 +1606,71 @@
           ),
         },
         data() {
-          return {}
+          return {
+            filtersType: [
+              'Phân khu',
+              'Mã căn',
+              'Loại hình',
+              'TTBG',
+              'Hướng',
+              'KT đất',
+              'DT đất',
+              'DTXD',
+            ],
+            menuData: [
+              {
+                icon: 'images/asset/akar-icons_dashboard.svg',
+                title: 'Dashboard',
+              },
+              {
+                icon: 'images/asset/fluent_table-multiple-20-filled.svg',
+                title: 'Bảng hàng',
+                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+              {
+                icon: 'images/asset/ix_customer.svg',
+                title: 'Khách hàng',
+                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+              {
+                icon: 'images/asset/dashicons_admin-generic.svg',
+                title: 'Quản trị',
+              },
+            ],
+          }
         },
         mounted() {
           window.onload = () => {
             // $('#modalError').modal('show')
+            new Swiper('.swiper-status-chips', {
+              slidesPerView: 'auto',
+              spaceBetween: 8,
+              navigation: {
+                nextEl: '.swiper-btn-next',
+                prevEl: '.swiper-btn-prev',
+              },
+            })
           }
         },
       }).mount('#app')
+    </script>
+
+    <!-- Flatpickr Date Picker -->
+    <script src="libs/flatpickr/flatpickr.js"></script>
+    <script src="libs/flatpickr/vn.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Flatpickr for "Lịch tương tác" field
+        if (document.getElementById('detailLichTuongTac')) {
+          flatpickr('#detailLichTuongTac', {
+            locale: 'vn',
+            dateFormat: 'd/m/Y',
+            allowInput: true,
+            clickOpens: true,
+            theme: 'default',
+          })
+        }
+      })
     </script>
   </body>
 </html>

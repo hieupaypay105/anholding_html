@@ -1,0 +1,19 @@
+@charset "UTF-8";
+@import '../scss/fonts';
+
+@import '../scss/bootstrap/bootstrap-grid', '../scss/bootstrap/bootstrap-reboot',
+  '../scss/bootstrap/bootstrap-utilities',
+  // "../scss/bootstrap/bootstrap",
+  '../scss/bootstrap/images',
+  '../scss/bootstrap/modal', '../scss/bootstrap/dropdown',
+  '../scss/bootstrap/tooltip', '../scss/bootstrap/transitions';
+
+@import '../scss/reset', '../scss/variables', '../scss/body',
+  //components
+  '../scss/components/header',
+  '../scss/components/footer', '../scss/components/sidebar',
+  '../scss/components/user-switch', '../scss/components/filter-table',
+  '../scss/components/table',
+  // pages
+  '../scss/pages/index',
+  '../scss/pages/khachhang-v2';

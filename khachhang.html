@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Holdings</title>
+    <!-- <link rel="icon" type="image/x-icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="js/croppie.min.css" />
+    <link href="js/select2.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <link href="js/dropzone.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <main>
+        <div
+          id="dashboard"
+          class="flex flex-col bg-[#d8eeff] min-h-[100vh] h-full w-full"
+        >
+          <div
+            id="Sidebar"
+            class="fixed xl:top-6 xl:left-6 max-xl:top-0 max-xl:left-0 max-w-[240px] h-full xl:h-[calc(100%-48px)] z-[101]"
+          >
+            <div class="fixed xl:hidden top-4 right-4">
+              <button type="button" id="btnSidebar-mb">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.5 9.09696L1.91065 14.6863C1.70152 14.8954 1.43536 15 1.11217 15C0.788973 15 0.522813 14.8954 0.313688 14.6863C0.104562 14.4772 0 14.211 0 13.8878C0 13.5646 0.104562 13.2985 0.313688 13.0894L5.90304 7.5L0.313688 1.91065C0.104562 1.70152 0 1.43536 0 1.11217C0 0.788973 0.104562 0.522813 0.313688 0.313688C0.522813 0.104562 0.788973 0 1.11217 0C1.43536 0 1.70152 0.104562 1.91065 0.313688L7.5 5.90304L13.0894 0.313688C13.2985 0.104562 13.5646 0 13.8878 0C14.211 0 14.4772 0.104562 14.6863 0.313688C14.8954 0.522813 15 0.788973 15 1.11217C15 1.43536 14.8954 1.70152 14.6863 1.91065L9.09696 7.5L14.6863 13.0894C14.8954 13.2985 15 13.5646 15 13.8878C15 14.211 14.8954 14.4772 14.6863 14.6863C14.4772 14.8954 14.211 15 13.8878 15C13.5646 15 13.2985 14.8954 13.0894 14.6863L7.5 9.09696Z"
+                    fill="#464661"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div
+              id="sidebarTranslate"
+              class="flex flex-col xl:rounded-[84px] overflow-hidden bg-white h-full"
+            >
+              <div
+                class="p-[10px_15px_5px] max-md:bg-[#17478d] max-md:pt-[90px]"
+              >
+                <div class="w-full h-auto max-w-full">
+                  <a href="" title="">
+                    <img
+                      class="object-scale-down w-full h-full"
+                      src="images/asset/logo.png"
+                      alt=""
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <div
+                class="overflow-bar-custom flex flex-col h-full overflow-auto bg-cover bg-center bg-no-repeat xl:rounded-[12px] p-[20px_0_20px_15px]"
+                style="background-image: url('./images/asset/bg-sidebar.png')"
+              >
+                <div class="flex flex-col h-full gap-1">
+                  <!-- overflow-scroll h-full -->
+                  <div
+                    id="sidebarList"
+                    class="flex flex-col gap-1 pb-10 sidebar-list"
+                  >
+                    <div class="child" v-for="(item, id) in menuData" :key="id">
+                      <div class="relative item">
+                        <a
+                          href=""
+                          title=""
+                          :class="{ active: id === 0 }"
+                          class="link flex items-center !gap-2"
+                        >
+                          <div class="icon md:!p-2 !p-1">
+                            <img
+                              :src="item.icon"
+                              alt=""
+                              class="object-scale-down w-6 h-6"
+                            />
+                          </div>
+
+                          <div
+                            class="text grow !text-[16px] font-bold leading-normal"
+                          >
+                            {{ item.title }}
+                          </div>
+                        </a>
+
+                        <button
+                          type="button"
+                          class="onToggleDropdown inline-flex items-center justify-center w-[24px] h-[24px] text-center absolute right-0 top-1/2 -translate-y-[50%] z-10"
+                          v-if="item.sub"
+                        >
+                          <svg
+                            width="8"
+                            height="6"
+                            viewBox="0 0 8 6"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0.963998 1.16401C1.04757 1.0804 1.1468 1.01408 1.25601 0.968836C1.36523 0.923588 1.48228 0.900299 1.6005 0.900299C1.71871 0.900299 1.83577 0.923588 1.94498 0.968836C2.05419 1.01408 2.15342 1.0804 2.237 1.16401L4 2.92701L5.764 1.16401C5.93388 1.00112 6.16081 0.911265 6.39616 0.913693C6.6315 0.916122 6.85653 1.01064 7.02302 1.177C7.1895 1.34336 7.2842 1.56831 7.28681 1.80365C7.28943 2.03899 7.19975 2.26599 7.037 2.43601L4.637 4.83601C4.55342 4.91961 4.45419 4.98593 4.34498 5.03118C4.23577 5.07643 4.11871 5.09971 4.0005 5.09971C3.88228 5.09971 3.76523 5.07643 3.65602 5.03118C3.5468 4.98593 3.44758 4.91961 3.364 4.83601L0.963998 2.43601C0.795457 2.26726 0.70079 2.03851 0.70079 1.80001C0.70079 1.56151 0.795457 1.33276 0.963998 1.16401Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div class="sub" style="display: none" v-if="item.sub">
+                        <div
+                          class="item-sub"
+                          v-for="(sub, id) in item.sub"
+                          :key="id"
+                        >
+                          <a
+                            href=""
+                            title=""
+                            class="leading-normal link-sub"
+                            :class="{ active: id === 0 }"
+                          >
+                            {{ sub }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="RootLayout" class="block !p-6">
+            <div class="flex flex-col h-[95vh] relative">
+              <div id="userDropdown" class="relative !mb-5">
+                <div class="flex flex-wrap items-center gap-2">
+                  <button type="button" id="btnSidebar">
+                    <img
+                      src="images/asset/material-symbols_menu-rounded.png"
+                      alt=""
+                    />
+                  </button>
+
+                  <!-- thay 3F8CFE => 363636 nếu là trường hợp text đen -->
+                  <h2
+                    class="max-md:hidden !text-[#3F8CFE] !text-[16px] !font-bold !uppercase !m-0 !ms-4"
+                  >
+                    danh sách khách hàng
+                  </h2>
+
+                  <div class="inline-flex items-center gap-6 ms-auto">
+                    <button
+                      type="button"
+                      id="tippyUserDropdown"
+                      class="inline-flex !gap-2 items-center bg-white !rounded-[8px] p-1"
+                    >
+                      <img
+                        class="w-[30px] h-[30px] rounded-[8px] border border-solid border-[#f4f9fd] object-cover flex-shrink-0"
+                        src="images/asset/sm-ava.png"
+                        alt=""
+                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M16 10L12 14L8 10H16Z"
+                          fill="#3F8CFE"
+                          stroke="#3F8CFE"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <div id="tippyHTMLUser" style="display: none">
+                      <div class="tippy-user-list">
+                        <a href="" title=""> Thông tin cá nhân </a>
+                        <a href="" title=""> Thoát </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="breadcrumbs !mb-5">
+                <a href="">Home</a>
+                <a href="">Khách hàng</a>
+              </div>
+
+              <div class="block !mb-5">
+                <!-- thay 3F8CFE => 363636 nếu là trường hợp text đen -->
+                <h2
+                  class="md:hidden !text-[#3F8CFE] !text-[16px] !font-bold !uppercase !m-0"
+                >
+                  vinhomes ocean park 2
+                </h2>
+              </div>
+
+              <div class="flex flex-wrap max-items-stretch !gap-3 !mb-2">
+                <div class="block">
+                  <div class="relative h-full">
+                    <button
+                      type="button"
+                      id="btnFilters"
+                      class="btn-filters w-full justify-center inline-flex items-center gap-2 !rounded-[8px] !bg-white md:!p-[6px_24px] !h-full max-md:!w-[36px] max-md:!h-[36px]"
+                    >
+                      <img src="images/asset/icon-filter.svg" alt="" />
+                      <span class="text-[#363636] text-[14px] font-bold">
+                        Bộ lọc
+                      </span>
+                    </button>
+
+                    <div
+                      id="dropdownFilters"
+                      class="max-h-[300px] flex flex-col overflow-y-auto dropdown-filters absolute bg-white border border-solid border-[#ECECEC] rounded-[8px] min-w-[265px] p-2.5 z-100"
+                      style="display: none"
+                    >
+                      <div class="!mb-2.5">
+                        <span
+                          class="text-[#363636] text-[12px] font-bold !ps-5"
+                        >
+                          Cài đặt hiển thị
+                        </span>
+                      </div>
+
+                      <!-- <div class="mb-1 input-search-filter">
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        placeholder="Tìm kiếm"
+                        class="text-[#363636] !text-[12px] placeholder:italic border border-solid border-[#ECECEC] w-full p-[5px_20px]"
+                      />
+                    </div> -->
+
+                      <div class="border border-solid border-[#ECECEC] w-full">
+                        <div
+                          class="item item-checked-all"
+                          onclick="(e) => e.stopPropagation()"
+                        >
+                          <input
+                            type="checkbox"
+                            name=""
+                            id="checkedAllFilter"
+                          />
+                          <label
+                            for="checkedAllFilter"
+                            class="text-[#363636] text-[12px] font-normal"
+                          >
+                            Chọn tất cả
+                          </label>
+                        </div>
+                        <div
+                          class="item"
+                          onclick="(e) => e.stopPropagation()"
+                          v-for="(item,id) in filtersType"
+                          :key="id"
+                        >
+                          <input type="checkbox" name="" :id="'showID' + id" />
+                          <label
+                            :for="'showID' + id"
+                            class="text-[#363636] text-[12px] font-normal"
+                          >
+                            {{ item }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="inline-flex flex-wrap items-center gap-3 ms-auto">
+                  <button
+                    type="button"
+                    class="!inline-flex !items-center !bg-[#3F8CFE] !rounded-[8px] !gap-1 !p-[6px_12px]"
+                    data-bs-target="#modalAdminAdding"
+                    data-bs-toggle="modal"
+                  >
+                    <img src="images/asset/si_add-fill.svg" alt="" />
+                    <span class="!text-white !text-[14px] !font-bold">
+                      Thêm mới
+                    </span>
+                  </button>
+
+                  <div
+                    class="modal fade"
+                    id="modalAdminAdding"
+                    style="overflow: visible"
+                  >
+                    <div
+                      class="modal-dialog modal-dialog-centered !max-w-[410px]"
+                    >
+                      <div class="modal-content !border-0 !rounded-[12px]">
+                        <button
+                          type="button"
+                          data-bs-dismiss="modal"
+                          class="absolute z-10 top-4 right-4"
+                        >
+                          <img
+                            src="images/asset/material-symbols_close-rounded.svg"
+                            alt=""
+                          />
+                        </button>
+
+                        <div class="xl:!p-[60px] xl:!pb-12 !p-4 modal-body">
+                          <div class="mb-8 text-center">
+                            <h3
+                              class="inline-block !text-[#363636] !text-[14px] !font-bold uppercase"
+                            >
+                              thêm mới khách hàng
+                            </h3>
+                          </div>
+
+                          <form action="" class="form-add-new">
+                            <div class="grid grid-cols-12 gap-x-[10px] gap-y-4">
+                              <div class="col-span-12">
+                                <div class="ipt-gr">
+                                  <span class="required title">
+                                    Họ và tên
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    placeholder="Nhập họ và tên"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-span-12">
+                                <div class="ipt-gr">
+                                  <span class="required title">
+                                    Số điện thoại
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    placeholder="Nhập số điện thoại"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-span-12 lg:col-span-6">
+                                <div class="ipt-gr">
+                                  <span class="required title">
+                                    Tỉnh/ Thành
+                                  </span>
+                                  <select name="" id="">
+                                    <option value="">Chọn tỉnh thành</option>
+                                    <option value="">Chọn tỉnh thành</option>
+                                    <option value="">Chọn tỉnh thành</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-span-12 lg:col-span-6">
+                                <div class="ipt-gr">
+                                  <span class="required title"> Dự án </span>
+                                  <select name="" id="">
+                                    <option value="">Chọn dự án</option>
+                                    <option value="">Chọn dự án</option>
+                                    <option value="">Chọn dự án</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-span-12 lg:col-span-6">
+                                <div class="ipt-gr">
+                                  <span class="required title"> Nguồn </span>
+                                  <select name="" id="">
+                                    <option value="">Chọn nguồn</option>
+                                    <option value="">Chọn nguồn</option>
+                                    <option value="">Chọn nguồn</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-span-12 lg:col-span-6">
+                                <div class="ipt-gr">
+                                  <span class="required title"> Sale </span>
+                                  <select name="" id="">
+                                    <option value="">Chọn Sale</option>
+                                    <option value="">Chọn Sale</option>
+                                    <option value="">Chọn Sale</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-span-12">
+                                <div class="ipt-gr">
+                                  <span class="required title"> Ghi chú </span>
+                                  <textarea
+                                    name=""
+                                    id=""
+                                    class="min-h-[135px]"
+                                  ></textarea>
+                                </div>
+                              </div>
+
+                              <div class="col-span-12 mt-3">
+                                <div class="text-center">
+                                  <button
+                                    type="button"
+                                    class="inline-flex items-center !p-[5px_30px] !bg-[#3F8CFE] !rounded-[8px] text-[#fff] text-[16px] font-bold"
+                                  >
+                                    Xác nhận
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="h-full flex flex-col">
+                <div id="tableMagic" class="table-magic">
+                  <div class="table-container">
+                    <!-- Example column -->
+                    <div
+                      id="tableRowHeader"
+                      class="table-row header justify-between"
+                    >
+                      <div
+                        class="cell"
+                        v-for="(column,index) in tbhead"
+                        :key="index"
+                      >
+                        {{column.title}}
+
+                        <div class="tb-sort" v-if="column.hasSort">
+                          <button type="button">
+                            <img src="images/asset/tb-sort.svg" alt="" />
+                          </button>
+                        </div>
+
+                        <div class="tb-dropdown" v-if="column.hasSelected">
+                          <button type="button" class="tb-dropdown-button">
+                            <img src="images/asset/tb-nav.svg" alt="" />
+                          </button>
+
+                          <div
+                            class="tb-dropdown-menu border border-solid border-[#ECECEC] w-full"
+                            style="display: none"
+                          >
+                            <div
+                              class="item"
+                              onclick="(e) => e.stopPropagation()"
+                              v-for="i in 9"
+                            >
+                              <input
+                                type="checkbox"
+                                name=""
+                                :id="'showID5' + i"
+                              />
+                              <label
+                                :for="'showID5' + i"
+                                class="text-[#363636] text-[12px] font-normal"
+                              >
+                                Option {{i}}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="cell edit">Edit</div>
+                    </div>
+
+                    <!-- Example row -->
+                    <div id="tableRowBody" class="table-row body">
+                      <template v-for="n in 25">
+                        <div
+                          class="table-item justify-between"
+                          v-for="(item,index) in tbbody"
+                          :key="index"
+                        >
+                          <!-- tag-active , tag-unactive -->
+                          <div
+                            class="cell"
+                            :class="{'tag-red' : id === 6}"
+                            v-for="(data,id) in item.data"
+                            :key="id"
+                          >
+                            {{ data.title }}
+
+                            <template v-if="data.hasNoted">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-bs-title="This top tooltip is themed via CSS variables."
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="size-6"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                                  />
+                                </svg>
+                              </button>
+                            </template>
+                          </div>
+
+                          <div class="cell edit edit-body">
+                            <button type="button" class="cell-btn-edit">
+                              <img src="images/asset/svg-edit.svg" alt="" />
+                            </button>
+                            <button type="button" class="cell-btn-delete">
+                              <img src="images/asset/svg-delete.svg" alt="" />
+                            </button>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="tb-pagination flex flex-wrap items-center max-md:justify-center md:gap-4 gap-2 md:mt-auto mt-4"
+                >
+                  <div
+                    class="relative flex items-center gap-1 p-[8px_12px] bg-white !rounded-[8px] md:!min-w-[186px] text-[#363636] text-[12px] font-normal"
+                  >
+                    <select
+                      name=""
+                      id=""
+                      class="appearance-none text-[#363636] text-[12px] font-normal"
+                    >
+                      <option value="">20</option>
+                      <option value="">40</option>
+                      <option value="">30</option>
+                      <option value="">10</option>
+                    </select>
+
+                    <span>bản ghi / trang</span>
+
+                    <div
+                      class="max-md:hidden pointer-events-none absolute right-3 top-[50%] -translate-y-[50%]"
+                    >
+                      <svg
+                        width="8"
+                        height="6"
+                        viewBox="0 0 8 6"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0.964013 1.1641C1.04759 1.08049 1.14682 1.01417 1.25603 0.968927C1.36524 0.92368 1.4823 0.900391 1.60051 0.900391C1.71873 0.900391 1.83578 0.92368 1.945 0.968927C2.05421 1.01417 2.15344 1.08049 2.23701 1.1641L4.00001 2.9271L5.76401 1.1641C5.9339 1.00121 6.16083 0.911356 6.39617 0.913785C6.63152 0.916214 6.85654 1.01073 7.02303 1.17709C7.18952 1.34345 7.28422 1.5684 7.28683 1.80374C7.28944 2.03908 7.19976 2.26609 7.03701 2.4361L4.63701 4.8361C4.55344 4.9197 4.45421 4.98602 4.345 5.03127C4.23578 5.07652 4.11873 5.09981 4.00051 5.09981C3.8823 5.09981 3.76524 5.07652 3.65603 5.03127C3.54682 4.98602 3.44759 4.9197 3.36401 4.8361L0.964013 2.4361C0.795473 2.26735 0.700806 2.0386 0.700806 1.8001C0.700806 1.5616 0.795473 1.33285 0.964013 1.1641Z"
+                          fill="#363636"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div
+                    class="md:ms-auto flex flex-wrap items-center gap-[8px] md:gap-[30px]"
+                  >
+                    <div class="text-[#363636] text-[12px] font-normal">
+                      1 - 10 trong 10 kết quả
+                    </div>
+
+                    <div
+                      class="tb-navigation flex flex-wrap items-center md:gap-2"
+                    >
+                      <a href="" class="disabled">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M14.69 17.29C14.7827 17.1975 14.8562 17.0876 14.9064 16.9666C14.9566 16.8456 14.9824 16.7159 14.9824 16.585C14.9824 16.454 14.9566 16.3243 14.9064 16.2034C14.8562 16.0824 14.7827 15.9725 14.69 15.88L10.81 12L14.69 8.11998C14.877 7.933 14.982 7.67941 14.982 7.41498C14.982 7.15055 14.877 6.89695 14.69 6.70998C14.503 6.523 14.2494 6.41796 13.985 6.41796C13.7206 6.41796 13.467 6.523 13.28 6.70998L8.68998 11.3C8.59727 11.3925 8.52373 11.5024 8.47355 11.6234C8.42336 11.7443 8.39753 11.874 8.39753 12.005C8.39753 12.1359 8.42336 12.2656 8.47355 12.3866C8.52373 12.5076 8.59727 12.6175 8.68998 12.71L13.28 17.3C13.66 17.68 14.3 17.68 14.69 17.29Z"
+                            fill="#363636"
+                          />
+                        </svg>
+                      </a>
+
+                      <input
+                        type="text"
+                        name=""
+                        value="1"
+                        id=""
+                        class="rounded-[8px] bg-white w-[30px] h-[30px] inline-flex flex-col items-center justify-center text-center"
+                      />
+
+                      <a href="">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M9.31002 6.71002C9.21732 6.80254 9.14377 6.91242 9.09359 7.0334C9.04341 7.15437 9.01758 7.28405 9.01758 7.41502C9.01758 7.54599 9.04341 7.67567 9.09359 7.79665C9.14377 7.91762 9.21732 8.02751 9.31002 8.12002L13.19 12L9.31002 15.88C9.12304 16.067 9.018 16.3206 9.018 16.585C9.018 16.8494 9.12304 17.103 9.31002 17.29C9.497 17.477 9.7506 17.582 10.015 17.582C10.2794 17.582 10.533 17.477 10.72 17.29L15.31 12.7C15.4027 12.6075 15.4763 12.4976 15.5265 12.3766C15.5766 12.2557 15.6025 12.126 15.6025 11.995C15.6025 11.8641 15.5766 11.7344 15.5265 11.6134C15.4763 11.4924 15.4027 11.3825 15.31 11.29L10.72 6.70002C10.34 6.32002 9.70002 6.32002 9.31002 6.71002Z"
+                            fill="#363636"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <table-magic></table-magic> -->
+          </div>
+        </div>
+
+        <!-- modal error -->
+        <div class="modal fade" id="modalError">
+          <div class="modal-dialog modal-dialog-centered !max-w-[410px]">
+            <div
+              class="modal-content !border-0 !rounded-[12px] p-[60px_24px_30px]"
+            >
+              <button
+                type="button"
+                data-bs-dismiss="modal"
+                class="absolute z-10 top-4 right-4"
+              >
+                <img
+                  src="images/asset/material-symbols_close-rounded.svg"
+                  alt=""
+                />
+              </button>
+
+              <div class="block text-center">
+                <h3 class="!text-[#363636] !text-[14px] !font-bold !uppercase">
+                  thông báo lỗi
+                </h3>
+                <div class="!my-5">
+                  <img
+                    src="images/asset/icon-park-outline_attention.svg"
+                    alt=""
+                    class="mx-auto"
+                  />
+                </div>
+                <p class="text-[#363636] text-[14px] font-semibold underline">
+                  Export danh sách người dùng gặp lỗi!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script src="js/vue3-sfc-loader.js"></script>
+    <script src="js/vuedefineasync.js"></script>
+    <script src="libs/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="libs/bootstrap/popper.min.js"></script>
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+    <script src="js/index.global.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/tippy.umd.min.js"></script>
+    <script src="js/croppie.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.1.1/dist/ag-grid-enterprise.min.js"></script>
+    <script src="js/dropzone.min.js"></script>
+    <script defer src="js/main.js"></script>
+
+    <!-- fake data for table -->
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            filtersType: [
+              'Phân khu',
+              'Mã căn',
+              'Loại hình',
+              'TTBG',
+              'Hướng',
+              'KT đất',
+              'DT đất',
+              'DTXD',
+            ],
+            tbhead: [
+              {
+                title: 'ID',
+                hasSelected: false,
+                hasSort: false,
+              },
+              {
+                title: 'Dự án',
+                hasSelected: true,
+                hasSort: false,
+              },
+              {
+                title: 'Nguồn',
+                hasSelected: true,
+                hasSort: false,
+              },
+              {
+                title: 'Họ và tên',
+                hasSelected: false,
+                hasSort: false,
+              },
+              {
+                title: 'Số điện thoại',
+                hasSelected: false,
+                hasSort: false,
+              },
+              {
+                title: 'Tỉnh/ Thành',
+                hasSelected: true,
+                hasSort: false,
+              },
+              {
+                title: 'Tình trạng',
+                hasSelected: true,
+                hasSort: false,
+              },
+              {
+                title: 'Sale',
+                hasSelected: true,
+                hasSort: false,
+              },
+              {
+                title: 'Ghi chú',
+                hasSelected: false,
+                hasSort: false,
+              },
+              {
+                title: 'Ngày tạo',
+                hasSelected: false,
+                hasSort: false,
+              },
+            ],
+
+            tbbody: [
+              {
+                data: [
+                  { title: '01', hasTag: false },
+                  { title: 'NV-001', hasTag: false },
+                  { title: 'SEO', hasTag: false },
+                  { title: 'Nguyễn Đức Hiếu', hasTag: false },
+                  { title: '0904 444 555', hasTag: false },
+                  { title: 'Hà Nội', hasTag: false },
+                  { title: 'Mới', hasTag: true },
+                  { title: 'Bùi Anh Tuấn', hasTag: false },
+                  { title: '', hasTag: false, hasNoted: true },
+                  { title: '10/01/2025', hasTag: false },
+                ],
+              },
+            ],
+
+            menuData: [
+              {
+                icon: 'images/asset/akar-icons_dashboard.svg',
+                title: 'Dashboard',
+                // sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+              {
+                icon: 'images/asset/fluent_table-multiple-20-filled.svg',
+                title: 'Bảng hàng',
+                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+              {
+                icon: 'images/asset/ix_customer.svg',
+                title: 'Khách hàng',
+                sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+                // sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+              {
+                icon: 'images/asset/dashicons_admin-generic.svg',
+                title: 'Quản trị',
+                // sub: ['Vinhomes Ocean Park 2', 'Vinhomes Ocean Park 3'],
+              },
+            ],
+          }
+        },
+      }).mount('#app')
+    </script>
+
+    <script>
+      Vue.createApp({
+        components: {
+          sidebar: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/sidebar.vue', options),
+          ),
+          'root-layout': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/root-layout.vue', options),
+          ),
+          'user-switch': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/user-switch.vue', options),
+          ),
+          'filte-table': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/filte-table.vue', options),
+          ),
+          'table-magic': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/table-magic.vue', options),
+          ),
+        },
+        data() {
+          return {}
+        },
+        mounted() {
+          window.onload = () => {
+            // $('#modalError').modal('show')
+          }
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

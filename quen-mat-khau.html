@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Holdings</title>
+    <!-- <link rel="icon" type="image/x-icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <myheader></myheader>
+      <main>
+        <section
+          id="loginPage"
+          class="h-[100vh] w-full bg-cover bg-no-repeat bg-bottom"
+          style="background-image: url(../template/images/asset/bg-login.jpg)"
+        >
+          <div class="flex flex-wrap items-center justify-center h-full">
+            <div
+              class="relative max-w-[410px] max-sm:mx-4 w-full rounded-[12px] border border-solid border-[#f2f2f2] !bg-[#ffffff40] !backdrop-blur-md p-[16px_36px_32px] max-sm:p-[16px_16px_32px]"
+            >
+              <a href="" class="absolute top-4 right-4 z-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 13.4L7.10005 18.3C6.91672 18.4833 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4833 5.70005 18.3C5.51672 18.1167 5.42505 17.8833 5.42505 17.6C5.42505 17.3167 5.51672 17.0833 5.70005 16.9L10.6 12L5.70005 7.1C5.51672 6.91667 5.42505 6.68334 5.42505 6.4C5.42505 6.11667 5.51672 5.88334 5.70005 5.7C5.88338 5.51667 6.11672 5.425 6.40005 5.425C6.68338 5.425 6.91672 5.51667 7.10005 5.7L12 10.6L16.9 5.7C17.0834 5.51667 17.3167 5.425 17.6 5.425C17.8834 5.425 18.1167 5.51667 18.3 5.7C18.4834 5.88334 18.575 6.11667 18.575 6.4C18.575 6.68334 18.4834 6.91667 18.3 7.1L13.4 12L18.3 16.9C18.4834 17.0833 18.575 17.3167 18.575 17.6C18.575 17.8833 18.4834 18.1167 18.3 18.3C18.1167 18.4833 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4833 16.9 18.3L12 13.4Z"
+                    fill="#E1E1E1"
+                  />
+                </svg>
+              </a>
+
+              <div class="logo max-w-[188px] mx-auto">
+                <img
+                  src="images/asset/logo.png"
+                  alt=""
+                  class="max-w-full w-full h-auto object-scale-down"
+                />
+              </div>
+
+              <div class="text-center mb-10">
+                <span
+                  class="text-[#e1e1e1] text-[14px] font-medium leading-normal block !mb-3"
+                >
+                  Hệ thống CRM An Holdings
+                </span>
+                <h3
+                  class="text-white !text-[20px] font-bold leading-normal uppercase !m-0"
+                >
+                  Lấy lại mật khẩu
+                </h3>
+              </div>
+
+              <form action="" id="loginForm">
+                <div class="block !mb-12">
+                  <span
+                    class="block mb-2 required text-[#e1e1e1] text-[16px] font-bold leading-normal"
+                  >
+                    Email của bạn
+                  </span>
+
+                  <div class="input relative">
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Nhập tên đăng nhập"
+                      class="!rounded-[8px] border border-solid border-[#ededf6] p-2 !bg-[#ffffff40] placeholder:!text-[#E1E1E1] !text-[#fff] !text-[16px] placeholder:italic font-normal leading-normal w-full"
+                    />
+
+                    <label
+                      for=""
+                      class="absolute right-[10px] !top-1/2 !-translate-y-1/2 pointer-events-none"
+                    >
+                      <img
+                        src="images/asset/majesticons_mail-line.svg"
+                        alt=""
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="inline-block text-white text-[16px] font-bold !rounded-[8px] !bg-[#3f8cfe] !p-[10px_24px] hover:!bg-[#18478d] transition"
+                  >
+                    Tiếp tục
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+      <myfooter></myfooter>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script src="js/vue3-sfc-loader.js"></script>
+    <script src="js/vuedefineasync.js"></script>
+    <script src="libs/jquery/jquery-3.7.1.min.js"></script>
+    <script src="libs/bootstrap/popper.min.js"></script>
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+
+    <script src="js/index.global.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+      Vue.createApp({
+        components: {
+          myheader: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/header.vue', options),
+          ),
+          myfooter: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/footer.vue', options),
+          ),
+        },
+        data() {
+          return {}
+        },
+        mounted() {
+          window.onload = () => {}
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

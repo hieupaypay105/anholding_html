@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Holdings</title>
+    <!-- <link rel="icon" type="image/x-icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="libs/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="js/croppie.min.css" />
+    <link href="js/select2.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <main>
+        <div
+          id="dashboard"
+          class="flex flex-col bg-[#d8eeff] min-h-[100vh] h-full w-full"
+        >
+          <div
+            id="Sidebar"
+            class="fixed xl:top-6 xl:left-6 max-xl:top-0 max-xl:left-0 z-50 max-w-[240px] h-full xl:h-[calc(100%-48px)] z-[101]"
+          >
+            <div
+              id="sidebarTranslate"
+              class="flex flex-col xl:rounded-[84px] overflow-hidden bg-white h-full"
+            >
+              <div class="absolute xl:hidden top-4 right-4">
+                <button type="button" id="btnSidebar-mb">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.5 9.09696L1.91065 14.6863C1.70152 14.8954 1.43536 15 1.11217 15C0.788973 15 0.522813 14.8954 0.313688 14.6863C0.104562 14.4772 0 14.211 0 13.8878C0 13.5646 0.104562 13.2985 0.313688 13.0894L5.90304 7.5L0.313688 1.91065C0.104562 1.70152 0 1.43536 0 1.11217C0 0.788973 0.104562 0.522813 0.313688 0.313688C0.522813 0.104562 0.788973 0 1.11217 0C1.43536 0 1.70152 0.104562 1.91065 0.313688L7.5 5.90304L13.0894 0.313688C13.2985 0.104562 13.5646 0 13.8878 0C14.211 0 14.4772 0.104562 14.6863 0.313688C14.8954 0.522813 15 0.788973 15 1.11217C15 1.43536 14.8954 1.70152 14.6863 1.91065L9.09696 7.5L14.6863 13.0894C14.8954 13.2985 15 13.5646 15 13.8878C15 14.211 14.8954 14.4772 14.6863 14.6863C14.4772 14.8954 14.211 15 13.8878 15C13.5646 15 13.2985 14.8954 13.0894 14.6863L7.5 9.09696Z"
+                      fill="#464661"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="p-[10px_15px_5px]">
+                <div class="w-full h-auto max-w-full">
+                  <a href="" title="">
+                    <img
+                      class="object-scale-down w-full h-full"
+                      src="images/asset/logo.png"
+                      alt=""
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <div
+                class="overflow-bar-custom flex flex-col h-full overflow-auto bg-cover bg-center bg-no-repeat xl:rounded-[12px] p-[70px_0_70px_10px]"
+                style="background-image: url('./images/asset/bg-sidebar.png')"
+              >
+                <div class="flex flex-col h-full gap-1">
+                  <!-- overflow-scroll h-full -->
+                  <div
+                    id="sidebarList"
+                    class="flex flex-col gap-1 pb-10 sidebar-list"
+                  >
+                    <div class="child" v-for="(item, id) in menuData" :key="id">
+                      <div class="relative item">
+                        <a
+                          href=""
+                          title=""
+                          :class="{ active: id === 0 }"
+                          class="link flex items-center !gap-2"
+                        >
+                          <div class="icon !p-2">
+                            <img
+                              :src="item.icon"
+                              alt=""
+                              class="object-scale-down w-6 h-6"
+                            />
+                          </div>
+
+                          <div
+                            class="text grow !text-[16px] font-bold leading-normal"
+                          >
+                            {{ item.title }}
+                          </div>
+                        </a>
+
+                        <button
+                          type="button"
+                          class="onToggleDropdown inline-flex items-center justify-center w-[24px] h-[24px] text-center absolute right-0 top-1/2 -translate-y-[50%] z-10"
+                          v-if="item.sub"
+                        >
+                          <svg
+                            width="8"
+                            height="6"
+                            viewBox="0 0 8 6"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0.963998 1.16401C1.04757 1.0804 1.1468 1.01408 1.25601 0.968836C1.36523 0.923588 1.48228 0.900299 1.6005 0.900299C1.71871 0.900299 1.83577 0.923588 1.94498 0.968836C2.05419 1.01408 2.15342 1.0804 2.237 1.16401L4 2.92701L5.764 1.16401C5.93388 1.00112 6.16081 0.911265 6.39616 0.913693C6.6315 0.916122 6.85653 1.01064 7.02302 1.177C7.1895 1.34336 7.2842 1.56831 7.28681 1.80365C7.28943 2.03899 7.19975 2.26599 7.037 2.43601L4.637 4.83601C4.55342 4.91961 4.45419 4.98593 4.34498 5.03118C4.23577 5.07643 4.11871 5.09971 4.0005 5.09971C3.88228 5.09971 3.76523 5.07643 3.65602 5.03118C3.5468 4.98593 3.44758 4.91961 3.364 4.83601L0.963998 2.43601C0.795457 2.26726 0.70079 2.03851 0.70079 1.80001C0.70079 1.56151 0.795457 1.33276 0.963998 1.16401Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div class="sub" style="display: none" v-if="item.sub">
+                        <div
+                          class="item-sub"
+                          v-for="(sub, id) in item.sub"
+                          :key="id"
+                        >
+                          <a
+                            href=""
+                            title=""
+                            class="leading-normal link-sub"
+                            :class="{ active: id === 0 }"
+                          >
+                            {{ sub }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="RootLayout" class="block !p-6">
+            <div id="userDropdown" class="relative !mb-5">
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="btnSidebar">
+                  <img
+                    src="images/asset/material-symbols_menu-rounded.png"
+                    alt=""
+                  />
+                </button>
+
+                <!-- thay 3F8CFE => 363636 nếu là trường hợp text đen -->
+                <h2
+                  class="max-md:hidden !text-[#3F8CFE] !text-[16px] !font-bold !uppercase !m-0 !ms-4"
+                >
+                  danh sách khách hàng
+                </h2>
+
+                <div class="inline-flex items-center gap-6 ms-auto">
+                  <button
+                    type="button"
+                    id="tippyUserDropdown"
+                    class="inline-flex !gap-2 items-center bg-white !rounded-[8px] p-1"
+                  >
+                    <img
+                      class="w-[30px] h-[30px] rounded-[8px] border border-solid border-[#f4f9fd] object-cover flex-shrink-0"
+                      src="images/asset/sm-ava.png"
+                      alt=""
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M16 10L12 14L8 10H16Z"
+                        fill="#3F8CFE"
+                        stroke="#3F8CFE"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <div id="tippyHTMLUser" style="display: none">
+                    <div class="tippy-user-list">
+                      <a href="" title=""> Thông tin cá nhân </a>
+                      <a href="" title=""> Thoát </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="breadcrumbs !mb-5">
+              <a href="">Home</a>
+              <a href="">Khách hàng</a>
+            </div>
+
+            <div class="block !mb-5">
+              <!-- thay 3F8CFE => 363636 nếu là trường hợp text đen -->
+              <h2
+                class="md:hidden !text-[#3F8CFE] !text-[16px] !font-bold !uppercase !m-0"
+              >
+                vinhomes ocean park 2
+              </h2>
+            </div>
+
+            <form
+              action=""
+              id="dashboardForm"
+              class="rounded-[12px] bg-white px-2.5 !py-1 xl:max-w-[552px] !mt-[100px] max-md:!mt-[20px]"
+            >
+              <div class="group-image bg-[#F4F9FD] rounded-[8px] p-[25px]">
+                <!-- <div class="block">
+                  <img id="cropperImage" src="images/asset/bg-login.jpg" />
+                </div>
+
+                <button type="button" onclick="imageCropped()">result</button> -->
+                <div class="w-[128px] h-[128px] mx-auto relative">
+                  <div
+                    class="relative w-full h-full rounded-[50%] overflow-hidden"
+                  >
+                    <input
+                      type="file"
+                      name=""
+                      id="croppieImageUpload"
+                      class="absolute opacity-0 pointer-events-none"
+                    />
+                    <label for="croppieImageUpload" class="cursor-pointer">
+                      <img
+                        src="images/asset/md-ava.png"
+                        class="object-cover w-full h-full"
+                        alt=""
+                      />
+                    </label>
+                  </div>
+
+                  <div
+                    class="absolute bottom-[-15px] right-[20px] pointer-events-none"
+                  >
+                    <img src="images/asset/circle-ic-cam.png" alt="" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="max-w-[265px] mx-auto p-[30px_0_60px]">
+                <div class="group-inputs">
+                  <div class="input !mb-2.5">
+                    <span
+                      class="block text-[#909090] text-[14px] font-normal !mb-1"
+                      >Tên đăng nhập</span
+                    >
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Nguyễn Đức Hiếu"
+                      class="w-full border border-solid border-[#ECECEC] bg-white !rounded-[8px] text-[#363636] text-[14px] font-normal !px-2 !py-1"
+                    />
+                  </div>
+                  <div class="input !mb-2.5">
+                    <span
+                      class="block text-[#909090] text-[14px] font-normal !mb-1"
+                      >Số điện thoại</span
+                    >
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="9094 666 555"
+                      class="w-full border border-solid border-[#ECECEC] bg-white !rounded-[8px] text-[#363636] text-[14px] font-normal !p-2"
+                    />
+                  </div>
+                  <div class="input !mb-2.5">
+                    <span
+                      class="block text-[#909090] text-[14px] font-normal !mb-1"
+                      >Email</span
+                    >
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="hieund105@abc.com"
+                      class="w-full border border-solid border-[#ECECEC] bg-white !rounded-[8px] text-[#363636] text-[14px] font-normal !p-2"
+                    />
+                  </div>
+                  <div class="input !mb-2.5">
+                    <span
+                      class="block text-[#909090] text-[14px] font-normal !mb-1"
+                      >Mật khẩu</span
+                    >
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Nhập mật khẩu"
+                      class="w-full border border-solid border-[#ECECEC] bg-white !rounded-[8px] text-[#363636] text-[14px] font-normal !p-2"
+                    />
+                  </div>
+                  <div class="input !mb-2.5">
+                    <span
+                      class="block text-[#909090] text-[14px] font-normal !mb-1"
+                      >Nhập lại mật khẩu</span
+                    >
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Nhập lại mật khẩu"
+                      class="w-full border border-solid border-[#ECECEC] bg-white !rounded-[8px] text-[#363636] text-[14px] font-normal !p-2"
+                    />
+                  </div>
+                </div>
+
+                <div class="text-center !mt-7">
+                  <button
+                    type="button"
+                    class="text-white text-[14px] font-bold !rounded-[8px] !bg-[#3F8CFE] hover:!bg-[#18478D] transition max-w-[152px] w-full !p-2.5"
+                  >
+                    Lưu
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+          class="modal fade modal-dialog-centered"
+          id="modalCroppie"
+          style="display: none"
+        >
+          <div class="modal-dialog modal-dialog-centered !max-w-[410px]">
+            <div class="modal-content relative">
+              <div class="absolute right-4 top-4 z-10">
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 13.4L7.09999 18.3C6.91665 18.4834 6.68332 18.575 6.39999 18.575C6.11665 18.575 5.88332 18.4834 5.69999 18.3C5.51665 18.1167 5.42499 17.8834 5.42499 17.6C5.42499 17.3167 5.51665 17.0834 5.69999 16.9L10.6 12L5.69999 7.10005C5.51665 6.91672 5.42499 6.68338 5.42499 6.40005C5.42499 6.11672 5.51665 5.88338 5.69999 5.70005C5.88332 5.51672 6.11665 5.42505 6.39999 5.42505C6.68332 5.42505 6.91665 5.51672 7.09999 5.70005L12 10.6L16.9 5.70005C17.0833 5.51672 17.3167 5.42505 17.6 5.42505C17.8833 5.42505 18.1167 5.51672 18.3 5.70005C18.4833 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4833 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4833 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4833 18.1167 18.3 18.3C18.1167 18.4834 17.8833 18.575 17.6 18.575C17.3167 18.575 17.0833 18.4834 16.9 18.3L12 13.4Z"
+                      fill="#909090"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="modal-body !p-[60px_0_50px]">
+                <div class="text-center !mb-10">
+                  <h3 class="!text-[#363636] !text-[14px] !font-bold uppercase">
+                    chọn ảnh đại diện
+                  </h3>
+                </div>
+
+                <div id="croppie-container"></div>
+
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="inline-block !bg-[#3F8CFE] !rounded-[8px] !p-[6px_30px] !text-[#fff] !text-[16px] !font-bold"
+                  >
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script src="js/vue3-sfc-loader.js"></script>
+    <script src="js/vuedefineasync.js"></script>
+    <script src="libs/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="libs/bootstrap/popper.min.js"></script>
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+
+    <script src="js/index.global.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/tippy.umd.min.js"></script>
+    <script src="js/croppie.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.1.1/dist/ag-grid-enterprise.min.js"></script>
+    <script defer src="js/main.js"></script>
+    <script>
+      Vue.createApp({
+        components: {
+          sidebar: Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/sidebar.vue', options),
+          ),
+          'root-layout': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/root-layout.vue', options),
+          ),
+          'user-switch': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/user-switch.vue', options),
+          ),
+          'filte-table': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/filte-table.vue', options),
+          ),
+          'table-magic': Vue.defineAsyncComponent(() =>
+            loadModule('./vue_components/table-magic.vue', options),
+          ),
+        },
+        data() {
+          return {}
+        },
+        mounted() {
+          window.onload = () => {
+            // $('#modalCroppie').modal('show')
+          }
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>

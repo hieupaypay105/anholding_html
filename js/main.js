@@ -503,7 +503,7 @@ function toggleDropdownFilter() {
 
     if (btn && dropdown) {
       btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent click from bubbling to document
+        e.stopPropagation() // Prevent click from bubbling to document
         if (dropdown.style.display == 'none') {
           dropdown.style.display = 'block'
         } else {
@@ -514,19 +514,28 @@ function toggleDropdownFilter() {
       // Đóng dropdown khi click ra ngoài
       document.addEventListener('click', (e) => {
         // Bỏ qua nếu click vào các phần tử của Select2 (dropdown list, search box, results...)
-        // Bỏ qua nếu click vào bên trong bản thân dropdown (do ở dưới đã stopPropagation nhưng đề phòng)
-        var isSelect2Click = e.target.closest('.select2-container') || e.target.closest('.select2-dropdown') || e.target.closest('.select2-results')
-        
+        var isSelect2Click =
+          e.target.closest('.select2-container') ||
+          e.target.closest('.select2-dropdown') ||
+          e.target.closest('.select2-results')
+        // Bỏ qua nếu click vào calendar của flatpickr (render ngoài DOM của dropdown)
+        var isFlatpickrClick = e.target.closest('.flatpickr-calendar')
+
         // Kiểm tra xem click có xảy ra bên ngoài btn và dropdown hay không
-        if (!btn.contains(e.target) && !dropdown.contains(e.target) && !isSelect2Click) {
+        if (
+          !btn.contains(e.target) &&
+          !dropdown.contains(e.target) &&
+          !isSelect2Click &&
+          !isFlatpickrClick
+        ) {
           dropdown.style.display = 'none'
         }
       })
-      
+
       // Prevent clicks inside the dropdown from bubbling up and closing it
       dropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
+        e.stopPropagation()
+      })
 
       const $dropdown = $(dropdown)
       const $checkAll = $('#' + checkAllId)
@@ -580,7 +589,11 @@ function toggleDropdownFilter() {
   }
 
   initDropdown('btnFilters', 'dropdownFilters', 'checkedAllFilter')
-  initDropdown('btnStatusDisplay', 'dropdownStatusDisplay', 'checkedAllStatusFilter')
+  initDropdown(
+    'btnStatusDisplay',
+    'dropdownStatusDisplay',
+    'checkedAllStatusFilter',
+  )
   initDropdown('btnSearchFilter', 'dropdownSearchFilter', null)
 }
 

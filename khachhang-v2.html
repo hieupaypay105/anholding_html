@@ -295,7 +295,6 @@
                         <select
                           id="filterSale"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Bùi Anh Tuấn"
                         >
                           <option value="all">Tất cả</option>
@@ -309,7 +308,6 @@
                         <select
                           id="filterNguon"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Youtube"
                         >
                           <option value="all">Tất cả</option>
@@ -323,7 +321,6 @@
                         <select
                           id="filterNhomKH"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Chuyển nhượng"
                         >
                           <option value="all">Tất cả</option>
@@ -337,7 +334,6 @@
                         <select
                           id="filterDuAn"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="OCP2"
                         >
                           <option value="all">Tất cả</option>
@@ -351,7 +347,6 @@
                         <select
                           id="filterPhanKhu"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Chà là"
                         >
                           <option value="all">Tất cả</option>
@@ -365,7 +360,6 @@
                         <select
                           id="filterLoaiHinh"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Tứ lập"
                         >
                           <option value="all">Tất cả</option>
@@ -379,7 +373,6 @@
                         <select
                           id="filterTaiChinh"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="7-8 tỷ"
                         >
                           <option value="all">Tất cả</option>
@@ -393,12 +386,34 @@
                         <select
                           id="filterTinhTrang"
                           class="block-selector w-full"
-                          multiple="multiple"
                           data-attr="Mới"
                         >
                           <option value="all">Tất cả</option>
                           <option value="1">Mới</option>
                         </select>
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Ngày sinh</label
+                        >
+                        <input
+                          type="text"
+                          id="filterNgaySinh"
+                          class="filter-input w-full"
+                          placeholder="Chọn khoảng ngày sinh"
+                          readonly
+                        />
+                      </div>
+                      <div class="filter-field">
+                        <label class="block text-[12px] text-[#363636] mb-1"
+                          >Địa chỉ</label
+                        >
+                        <input
+                          type="text"
+                          id="filterDiaChi"
+                          class="filter-input w-full"
+                          placeholder="Nhập địa chỉ"
+                        />
                       </div>
                     </div>
 
@@ -449,10 +464,9 @@
                   <select
                     id="filterSavedFilters"
                     class="block-selector w-full"
-                    multiple="multiple"
                     data-attr="Bộ lọc đã lưu"
                   >
-                    <option value="all">Tất cả</option>
+                    <!-- <option value="all">Tất cả</option> -->
                     <option value="1">Dữ liệu 06/06/2025 12:30:22</option>
                     <option value="2">Dữ liệu 06/06/2025 12:30:22</option>
                     <option value="3">Dữ liệu 06/06/2025 12:30:22</option>
@@ -465,10 +479,9 @@
                   <select
                     id="filterTimePeriod"
                     class="block-selector w-full"
-                    multiple="multiple"
                     data-attr="Tất cả"
                   >
-                    <option value="all">Tất cả</option>
+                    <!-- <option value="all">Tất cả</option> -->
                     <option value="hom-qua">Hôm qua</option>
                     <option value="hom-nay">Hôm nay</option>
                     <option value="tuan-truoc">Tuần trước</option>
@@ -1668,6 +1681,15 @@
             allowInput: true,
             clickOpens: true,
             theme: 'default',
+          })
+        }
+
+        // Initialize Flatpickr for "Ngày sinh" filter (date range)
+        if (document.getElementById('filterNgaySinh')) {
+          flatpickr('#filterNgaySinh', {
+            locale: 'vn',
+            dateFormat: 'd/m/Y',
+            allowInput: false,
           })
         }
       })

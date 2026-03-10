@@ -459,19 +459,269 @@
                   </div>
                 </div>
 
-                <!-- Box 2: Saved Filters -->
-                <div class="relative flex-1 min-w-[200px] h-[36px]">
-                  <select
-                    id="filterSavedFilters"
-                    class="block-selector w-full"
-                    data-attr="Bộ lọc đã lưu"
+                <!-- Box 2: Saved Filters (Custom Dropdown) -->
+                <div
+                  class="relative flex-1 min-w-[200px] h-[36px]"
+                  id="savedFiltersWrapper"
+                >
+                  <!-- Trigger Button -->
+                  <button
+                    type="button"
+                    id="btnSavedFilters"
+                    class="saved-filters-trigger"
                   >
-                    <!-- <option value="all">Tất cả</option> -->
-                    <option value="1">Dữ liệu 06/06/2025 12:30:22</option>
-                    <option value="2">Dữ liệu 06/06/2025 12:30:22</option>
-                    <option value="3">Dữ liệu 06/06/2025 12:30:22</option>
-                    <option value="4">Dữ liệu 06/06/2025 12:30:22</option>
-                  </select>
+                    <span class="saved-filters-trigger__icon">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polygon
+                          points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+                        ></polygon>
+                      </svg>
+                    </span>
+                    <span class="saved-filters-trigger__text"
+                      >Bộ lọc đã lưu</span
+                    >
+                    <span class="saved-filters-trigger__arrow">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <!-- Dropdown Panel -->
+                  <div
+                    id="dropdownSavedFilters"
+                    class="saved-filters-dropdown"
+                    style="display: none"
+                  >
+                    <!-- Search -->
+                    <div class="saved-filters-dropdown__search">
+                      <span class="saved-filters-dropdown__search-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#909090"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                      </span>
+                      <input
+                        type="text"
+                        class="saved-filters-dropdown__search-input"
+                        placeholder="Tên bộ lọc"
+                      />
+                    </div>
+
+                    <!-- Items List -->
+                    <div class="saved-filters-dropdown__list">
+                      <!-- Item 1 (Default) -->
+                      <div
+                        class="saved-filters-dropdown__item"
+                        data-filter-id="1"
+                        data-is-default="true"
+                      >
+                        <div class="saved-filters-dropdown__item-header">
+                          <span class="saved-filters-dropdown__item-title"
+                            >Dữ liệu upload lúc 06/11/2025 11:26:31</span
+                          >
+                          <span class="saved-filters-dropdown__tag-default">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Mặc định
+                          </span>
+                        </div>
+                        <div class="saved-filters-dropdown__item-meta">
+                          <span class="saved-filters-dropdown__item-author"
+                            >Do Huyen Trang</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <span class="saved-filters-dropdown__item-date"
+                            >06/11/2025 11:26</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--delete"
+                          >
+                            Xóa
+                          </button>
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--unset"
+                          >
+                            Bỏ mặc định
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Item 2 -->
+                      <div
+                        class="saved-filters-dropdown__item"
+                        data-filter-id="2"
+                      >
+                        <div class="saved-filters-dropdown__item-header">
+                          <span class="saved-filters-dropdown__item-title"
+                            >Dữ liệu upload lúc 13/06/2025 11:29:29</span
+                          >
+                        </div>
+                        <div class="saved-filters-dropdown__item-meta">
+                          <span class="saved-filters-dropdown__item-author"
+                            >Do Huyen Trang</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <span class="saved-filters-dropdown__item-date"
+                            >13/06/2025 11:29</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--delete"
+                          >
+                            Xóa
+                          </button>
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--set-default"
+                          >
+                            Mặc định
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Item 3 -->
+                      <div
+                        class="saved-filters-dropdown__item"
+                        data-filter-id="3"
+                      >
+                        <div class="saved-filters-dropdown__item-header">
+                          <span class="saved-filters-dropdown__item-title"
+                            >Dữ liệu upload lúc 05/06/2025 10:37:50</span
+                          >
+                        </div>
+                        <div class="saved-filters-dropdown__item-meta">
+                          <span class="saved-filters-dropdown__item-author"
+                            >Do Huyen Trang</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <span class="saved-filters-dropdown__item-date"
+                            >05/06/2025 10:37</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--delete"
+                          >
+                            Xóa
+                          </button>
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--set-default"
+                          >
+                            Mặc định
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Item 4 -->
+                      <div
+                        class="saved-filters-dropdown__item"
+                        data-filter-id="4"
+                      >
+                        <div class="saved-filters-dropdown__item-header">
+                          <span class="saved-filters-dropdown__item-title"
+                            >Dữ liệu upload lúc 13/02/2025 16:56:44</span
+                          >
+                        </div>
+                        <div class="saved-filters-dropdown__item-meta">
+                          <span class="saved-filters-dropdown__item-author"
+                            >Do Huyen Trang</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <span class="saved-filters-dropdown__item-date"
+                            >13/02/2025 16:56</span
+                          >
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--delete"
+                          >
+                            Xóa
+                          </button>
+                          <span class="saved-filters-dropdown__item-sep"
+                            >•</span
+                          >
+                          <button
+                            type="button"
+                            class="saved-filters-dropdown__item-action saved-filters-dropdown__item-action--set-default"
+                          >
+                            Mặc định
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Box 3: Time Period -->
@@ -827,6 +1077,20 @@
                           alt=""
                         />
                       </div>
+                      <div class="cell font-bold text-[#363636]">
+                        Nguồn
+                        <img
+                          src="images/asset/icon-park-solid_down-one.svg"
+                          class="w-4 h-4 ml-1 inline"
+                          alt=""
+                        />
+                      </div>
+                      <div class="cell font-bold text-[#363636]">
+                        Sale phụ trách
+                      </div>
+                      <div class="cell font-bold text-[#363636]">Ngày sinh</div>
+                      <div class="cell font-bold text-[#363636]">Địa chỉ</div>
+                      <div class="cell font-bold text-[#363636]">Ghi chú</div>
                       <!-- edit -->
                       <div class="cell font-bold text-[#363636] justify-center">
                         Edit
@@ -858,6 +1122,11 @@
                             >Mới</span
                           >
                         </div>
+                        <div class="cell">Youtube</div>
+                        <div class="cell">Bùi Anh Tuấn</div>
+                        <div class="cell">01/05/1993</div>
+                        <div class="cell">Ba Đình, HN</div>
+                        <div class="cell">KH tiềm năng</div>
                         <div class="cell edit edit-body justify-center">
                           <button type="button" class="cell-btn-edit">
                             <img src="images/asset/svg-edit.svg" alt="" />
@@ -1328,6 +1597,768 @@
                           </div>
                         </div>
                       </div>
+
+                      <!-- Row 2 -->
+                      <div
+                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
+                      >
+                        <div class="cell">02</div>
+                        <div class="cell">Trần Thị Mai</div>
+                        <div class="cell">0912 333 666</div>
+                        <div class="cell">mai.tran@gmail.com</div>
+                        <div class="cell">TP.HCM</div>
+                        <div class="cell">Đầu tư</div>
+                        <div class="cell">OCP3</div>
+                        <div class="cell">Hoa Sữa</div>
+                        <div class="cell">Song lập</div>
+                        <div class="cell">10-12 tỷ</div>
+                        <div class="cell">
+                          <span
+                            class="inline-flex items-center justify-center bg-[#e7fdff] border border-[#20ecff] text-[#00838f] text-[10px] rounded-[24px] px-2 h-[18px]"
+                            >Đang tiếp cận</span
+                          >
+                        </div>
+                        <div class="cell">Facebook</div>
+                        <div class="cell">Nguyễn Văn A</div>
+                        <div class="cell">15/03/1990</div>
+                        <div class="cell">Q7, TP.HCM</div>
+                        <div class="cell">KH quan tâm song lập</div>
+                        <div class="cell edit edit-body justify-center">
+                          <button type="button" class="cell-btn-edit">
+                            <img src="images/asset/svg-edit.svg" alt="" />
+                          </button>
+                          <button type="button" class="cell-btn-delete">
+                            <img src="images/asset/svg-delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Detail Accordion Content Row 2 -->
+                      <div
+                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
+                        style="display: none"
+                      >
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
+                        >
+                          <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Họ và tên
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Trần Thị Mai"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Số điện thoại
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="0912 333 666"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="mai.tran@gmail.com"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Tỉnh/ Thành</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="TP.HCM"
+                              />
+                            </div>
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] outline-none resize-none"
+                              >
+KH quan tâm song lập</textarea
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
+                        >
+                          <div
+                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
+                          >
+                            Trao đổi
+                          </div>
+                          <div class="mb-3">
+                            <div
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
+                            >
+                              <textarea
+                                class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
+                                placeholder="Nhập nội dung trao đổi..."
+                              ></textarea>
+                            </div>
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                TM
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Trần Thị Mai</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >05/03/2025 10:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Tôi muốn xem thêm về dự án OCP3, khu Hoa Sữa.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Row 3 -->
+                      <div
+                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
+                      >
+                        <div class="cell">03</div>
+                        <div class="cell">Lê Văn Hùng</div>
+                        <div class="cell">0978 111 222</div>
+                        <div class="cell">hung.le@yahoo.com</div>
+                        <div class="cell">Đà Nẵng</div>
+                        <div class="cell">Mua ở</div>
+                        <div class="cell">OCP2</div>
+                        <div class="cell">Chà là</div>
+                        <div class="cell">Biệt thự</div>
+                        <div class="cell">15-20 tỷ</div>
+                        <div class="cell">
+                          <span
+                            class="inline-flex items-center justify-center bg-[#cee1ff] border border-[#208cff] text-[#208cff] text-[10px] rounded-[24px] px-2 h-[18px]"
+                            >Đang tư vấn</span
+                          >
+                        </div>
+                        <div class="cell">Youtube</div>
+                        <div class="cell">Trần Thị B</div>
+                        <div class="cell">22/07/1985</div>
+                        <div class="cell">Hải Châu, ĐN</div>
+                        <div class="cell">Cần tư vấn thêm</div>
+                        <div class="cell edit edit-body justify-center">
+                          <button type="button" class="cell-btn-edit">
+                            <img src="images/asset/svg-edit.svg" alt="" />
+                          </button>
+                          <button type="button" class="cell-btn-delete">
+                            <img src="images/asset/svg-delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Detail Accordion Content Row 3 -->
+                      <div
+                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
+                        style="display: none"
+                      >
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
+                        >
+                          <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Họ và tên
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Lê Văn Hùng"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Số điện thoại
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="0978 111 222"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="hung.le@yahoo.com"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Tỉnh/ Thành</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Đà Nẵng"
+                              />
+                            </div>
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] outline-none resize-none"
+                              >
+Cần tư vấn thêm về biệt thự</textarea
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
+                        >
+                          <div
+                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
+                          >
+                            Trao đổi
+                          </div>
+                          <div class="mb-3">
+                            <div
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
+                            >
+                              <textarea
+                                class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
+                                placeholder="Nhập nội dung trao đổi..."
+                              ></textarea>
+                            </div>
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#e61b1b] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                LH
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Lê Văn Hùng</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >06/03/2025 14:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Tôi muốn xem biệt thự ở khu Chà là, dự án
+                                  OCP2.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Row 4 -->
+                      <div
+                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
+                      >
+                        <div class="cell">04</div>
+                        <div class="cell">Phạm Thùy Linh</div>
+                        <div class="cell">0365 444 777</div>
+                        <div class="cell">linh.pt@outlook.com</div>
+                        <div class="cell">Hà Nội</div>
+                        <div class="cell">Chuyển nhượng</div>
+                        <div class="cell">OCP2</div>
+                        <div class="cell">Chà là</div>
+                        <div class="cell">Tứ lập</div>
+                        <div class="cell">8-10 tỷ</div>
+                        <div class="cell">
+                          <span
+                            class="inline-flex items-center justify-center bg-[#ffead0] border border-[#ff8f20] text-[#ff8f20] text-[10px] rounded-[24px] px-2 h-[18px]"
+                            >Tiềm năng</span
+                          >
+                        </div>
+                        <div class="cell">Zalo</div>
+                        <div class="cell">Lê Văn C</div>
+                        <div class="cell">10/11/1992</div>
+                        <div class="cell">Cầu Giấy, HN</div>
+                        <div class="cell">Hẹn xem nhà tuần sau</div>
+                        <div class="cell edit edit-body justify-center">
+                          <button type="button" class="cell-btn-edit">
+                            <img src="images/asset/svg-edit.svg" alt="" />
+                          </button>
+                          <button type="button" class="cell-btn-delete">
+                            <img src="images/asset/svg-delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Detail Accordion Content Row 4 -->
+                      <div
+                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
+                        style="display: none"
+                      >
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
+                        >
+                          <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Họ và tên
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Phạm Thùy Linh"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Số điện thoại
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="0365 444 777"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="linh.pt@outlook.com"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Tỉnh/ Thành</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Hà Nội"
+                              />
+                            </div>
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] outline-none resize-none"
+                              >
+Hẹn xem nhà tuần sau</textarea
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
+                        >
+                          <div
+                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
+                          >
+                            Trao đổi
+                          </div>
+                          <div class="mb-3">
+                            <div
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
+                            >
+                              <textarea
+                                class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
+                                placeholder="Nhập nội dung trao đổi..."
+                              ></textarea>
+                            </div>
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#F6A723] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                PL
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Phạm Thùy Linh</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >07/03/2025 09:30</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Chị muốn xem căn tứ lập ở Chà Là cuối tuần
+                                  này.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Row 5 -->
+                      <div
+                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
+                      >
+                        <div class="cell">05</div>
+                        <div class="cell">Hoàng Minh Đức</div>
+                        <div class="cell">0888 999 000</div>
+                        <div class="cell">duc.hm@gmail.com</div>
+                        <div class="cell">Hải Phòng</div>
+                        <div class="cell">Đầu tư</div>
+                        <div class="cell">OCP3</div>
+                        <div class="cell">Hoa Sữa</div>
+                        <div class="cell">Song lập</div>
+                        <div class="cell">12-15 tỷ</div>
+                        <div class="cell">
+                          <span
+                            class="inline-flex items-center justify-center bg-[#ffd6e8] border border-[#dd00c0] text-[#dd00c0] text-[10px] rounded-[24px] px-2 h-[18px]"
+                            >Nóng</span
+                          >
+                        </div>
+                        <div class="cell">Google</div>
+                        <div class="cell">Phạm Thị D</div>
+                        <div class="cell">05/01/1988</div>
+                        <div class="cell">Lê Chân, HP</div>
+                        <div class="cell">KH VIP, ưu tiên cao</div>
+                        <div class="cell edit edit-body justify-center">
+                          <button type="button" class="cell-btn-edit">
+                            <img src="images/asset/svg-edit.svg" alt="" />
+                          </button>
+                          <button type="button" class="cell-btn-delete">
+                            <img src="images/asset/svg-delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Detail Accordion Content Row 5 -->
+                      <div
+                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
+                        style="display: none"
+                      >
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
+                        >
+                          <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Họ và tên
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Hoàng Minh Đức"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Số điện thoại
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="0888 999 000"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="duc.hm@gmail.com"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Tỉnh/ Thành</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Hải Phòng"
+                              />
+                            </div>
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] outline-none resize-none"
+                              >
+KH VIP, ưu tiên cao</textarea
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
+                        >
+                          <div
+                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
+                          >
+                            Trao đổi
+                          </div>
+                          <div class="mb-3">
+                            <div
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
+                            >
+                              <textarea
+                                class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
+                                placeholder="Nhập nội dung trao đổi..."
+                              ></textarea>
+                            </div>
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#00B69B] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                HĐ
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Hoàng Minh Đức</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >08/03/2025 11:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Tôi muốn đầu tư 2-3 căn song lập ở OCP3.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Row 6 -->
+                      <div
+                        class="table-item justify-between bg-[#fafafa] !border-b-[#c8c8c8]"
+                      >
+                        <div class="cell">06</div>
+                        <div class="cell">Ngô Thanh Hằng</div>
+                        <div class="cell">0933 222 888</div>
+                        <div class="cell">hang.nt@gmail.com</div>
+                        <div class="cell">Bình Dương</div>
+                        <div class="cell">Mua ở</div>
+                        <div class="cell">OCP2</div>
+                        <div class="cell">Chà là</div>
+                        <div class="cell">Tứ lập</div>
+                        <div class="cell">7-8 tỷ</div>
+                        <div class="cell">
+                          <span
+                            class="inline-flex items-center justify-center bg-[#e0d4ff] border border-[#5420ff] text-[#5420ff] text-[10px] rounded-[24px] px-2 h-[18px]"
+                            >Đã hẹn</span
+                          >
+                        </div>
+                        <div class="cell">Referral</div>
+                        <div class="cell">Hoàng Văn E</div>
+                        <div class="cell">18/09/1995</div>
+                        <div class="cell">Thủ Dầu Một, BD</div>
+                        <div class="cell">Đã đặt cọc giữ chỗ</div>
+                        <div class="cell edit edit-body justify-center">
+                          <button type="button" class="cell-btn-edit">
+                            <img src="images/asset/svg-edit.svg" alt="" />
+                          </button>
+                          <button type="button" class="cell-btn-delete">
+                            <img src="images/asset/svg-delete.svg" alt="" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Detail Accordion Content Row 6 -->
+                      <div
+                        class="table-detail-dropdown w-full bg-[#fafafa] p-2 flex flex-wrap gap-2 border-b border-[#c8c8c8]"
+                        style="display: none"
+                      >
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_400px] max-w-[435px] border border-[#ededf6] h-[545px] overflow-y-auto"
+                        >
+                          <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Họ và tên
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Ngô Thanh Hằng"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Số điện thoại
+                                <span class="text-[#e61b1b]">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="0933 222 888"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="hang.nt@gmail.com"
+                              />
+                            </div>
+                            <div class="col-span-1 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Tỉnh/ Thành</label
+                              >
+                              <input
+                                type="text"
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] outline-none"
+                                value="Bình Dương"
+                              />
+                            </div>
+                            <div class="col-span-2 flex flex-col gap-1">
+                              <label class="text-[12px] text-[#363636]"
+                                >Ghi chú</label
+                              >
+                              <textarea
+                                class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] min-h-[100px] px-3 py-2 !text-[12px] text-[#363636] outline-none resize-none"
+                              >
+Đã đặt cọc giữ chỗ</textarea
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bg-white rounded-[8px] p-4 flex-[1_1_500px] flex flex-col border border-[#ededf6]"
+                        >
+                          <div
+                            class="text-[#3f8cfe] text-[12px] font-normal mb-3"
+                          >
+                            Trao đổi
+                          </div>
+                          <div class="mb-3">
+                            <div
+                              class="bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] p-2 mb-3 relative min-h-[103px]"
+                            >
+                              <textarea
+                                class="w-full bg-transparent border-none outline-none resize-none text-[12px] p-2"
+                                placeholder="Nhập nội dung trao đổi..."
+                              ></textarea>
+                            </div>
+                            <div class="text-end">
+                              <button
+                                type="button"
+                                class="inline-block !bg-[#3f8cfe] text-white !text-[12px] font-bold !rounded-[4px] !px-[12px] !py-[6px]"
+                              >
+                                Gửi
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-white border border-[#ededf6] rounded-[8px] overflow-y-auto max-h-[300px]"
+                          >
+                            <div class="flex gap-2 p-4">
+                              <div
+                                class="w-8 h-8 rounded-full bg-[#184296] flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                              >
+                                NH
+                              </div>
+                              <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                  <span
+                                    class="text-[#184296] text-[12px] font-bold"
+                                    >Ngô Thanh Hằng</span
+                                  >
+                                  <span class="text-[#909090] text-[10px]"
+                                    >09/03/2025 16:00</span
+                                  >
+                                </div>
+                                <p class="text-[#363636] text-[12px] m-0">
+                                  Đã đặt cọc 50 triệu cho căn tứ lập Chà Là.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1571,33 +2602,6 @@
     <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.1.1/dist/ag-grid-enterprise.min.js"></script>
     <script src="js/dropzone.min.js"></script>
     <script defer src="js/main.js"></script>
-
-    <script>
-      $(document).ready(function () {
-        $('.table-item')
-          .css('cursor', 'pointer')
-          .on('click', function () {
-            const dropdown = $(this).next('.table-detail-dropdown')
-            const isVisible = dropdown.is(':visible')
-
-            if (isVisible) {
-              dropdown.slideUp()
-              $(this).removeClass('!bg-[#e3f7ff]')
-            } else {
-              dropdown.slideDown()
-              $(this).addClass('!bg-[#e3f7ff]')
-            }
-          })
-
-        // Prevent click events inside the "Thao tác/Edit" column from toggling the row
-        $('.table-item .cell-btn-edit, .table-item .cell-btn-delete').on(
-          'click',
-          function (e) {
-            e.stopPropagation()
-          },
-        )
-      })
-    </script>
 
     <script>
       Vue.createApp({

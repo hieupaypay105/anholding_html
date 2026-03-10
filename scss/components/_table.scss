@@ -249,6 +249,15 @@
         }
       }
     }
+
+    .table-detail-dropdown {
+      position: relative;
+      box-sizing: border-box;
+      // overflow: hidden;
+      will-change: transform;
+      // Width and translateX will be set by JS to match the visible container width
+      // and compensate for horizontal scroll offset
+    }
   }
 
   .table-container {

@@ -20128,6 +20128,11 @@ label.error {
 .table-magic .table-container .table-item:hover .cell.edit-body {
   background: #e3f7ff;
 }
+.table-magic .table-container .table-detail-dropdown {
+  position: relative;
+  box-sizing: border-box;
+  will-change: transform;
+}
 .table-magic .table-container {
   width: 100%;
   overflow-x: auto; /* Cuộn ngang nếu bảng quá rộng */
@@ -20649,6 +20654,176 @@ label.error {
 }
 .khachhang-v2 .khv2-filter-bar .select2-container--default .select2-selection--single .select2-selection__arrow {
   height: 28px;
+}
+.khachhang-v2 .saved-filters-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #ededf6;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.khachhang-v2 .saved-filters-trigger:hover {
+  border-color: #c8c8c8;
+}
+.khachhang-v2 .saved-filters-trigger.active {
+  border-color: #3f8cfe;
+}
+.khachhang-v2 .saved-filters-trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #909090;
+  flex-shrink: 0;
+}
+.khachhang-v2 .saved-filters-trigger__text {
+  flex: 1;
+  font-size: 12px;
+  color: #909090;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.khachhang-v2 .saved-filters-trigger__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #909090;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.khachhang-v2 .saved-filters-trigger.active .saved-filters-trigger__arrow {
+  transform: rotate(180deg);
+}
+.khachhang-v2 .saved-filters-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  min-width: 380px;
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  margin-top: 4px;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.khachhang-v2 .saved-filters-dropdown__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ececec;
+}
+.khachhang-v2 .saved-filters-dropdown__search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.khachhang-v2 .saved-filters-dropdown__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #363636;
+  background: transparent;
+}
+.khachhang-v2 .saved-filters-dropdown__search-input::-moz-placeholder {
+  color: #909090;
+}
+.khachhang-v2 .saved-filters-dropdown__search-input::placeholder {
+  color: #909090;
+}
+.khachhang-v2 .saved-filters-dropdown__list {
+  max-height: 320px;
+  overflow-y: auto;
+}
+.khachhang-v2 .saved-filters-dropdown__item {
+  padding: 12px 14px;
+  border-bottom: 1px solid #ececec;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.khachhang-v2 .saved-filters-dropdown__item:last-child {
+  border-bottom: none;
+}
+.khachhang-v2 .saved-filters-dropdown__item:hover {
+  background: #f8f9fb;
+}
+.khachhang-v2 .saved-filters-dropdown__item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.khachhang-v2 .saved-filters-dropdown__item-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #363636;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.khachhang-v2 .saved-filters-dropdown__tag-default {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: #18478d;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.khachhang-v2 .saved-filters-dropdown__item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.khachhang-v2 .saved-filters-dropdown__item-author {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e88520;
+}
+.khachhang-v2 .saved-filters-dropdown__item-sep {
+  font-size: 10px;
+  color: #c8c8c8;
+}
+.khachhang-v2 .saved-filters-dropdown__item-date {
+  font-size: 12px;
+  color: #909090;
+}
+.khachhang-v2 .saved-filters-dropdown__item-action {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.khachhang-v2 .saved-filters-dropdown__item-action:hover {
+  opacity: 0.7;
+}
+.khachhang-v2 .saved-filters-dropdown__item-action--delete {
+  color: #909090;
+}
+.khachhang-v2 .saved-filters-dropdown__item-action--set-default {
+  color: #909090;
+}
+.khachhang-v2 .saved-filters-dropdown__item-action--unset {
+  color: #909090;
 }
 .khachhang-v2 .khv2-status__chips {
   padding-right: 8px;

@@ -723,6 +723,202 @@ function tableTooltips() {
   )
 }
 
+function savedFiltersDropdown() {
+  var btn = document.getElementById('btnSavedFilters')
+  var dropdown = document.getElementById('dropdownSavedFilters')
+  var searchInput = dropdown
+    ? dropdown.querySelector('.saved-filters-dropdown__search-input')
+    : null
+
+  if (!btn || !dropdown) return
+
+  // Toggle dropdown
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation()
+    var isOpen = dropdown.style.display !== 'none'
+    dropdown.style.display = isOpen ? 'none' : 'block'
+    btn.classList.toggle('active', !isOpen)
+  })
+
+  // Close on click outside
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = 'none'
+      btn.classList.remove('active')
+    }
+  })
+
+  // Prevent dropdown click from closing
+  dropdown.addEventListener('click', function (e) {
+    e.stopPropagation()
+  })
+
+  // Search filter
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var keyword = this.value.toLowerCase()
+      var items = dropdown.querySelectorAll('.saved-filters-dropdown__item')
+      items.forEach(function (item) {
+        var title = item.querySelector('.saved-filters-dropdown__item-title')
+        if (title) {
+          var text = title.textContent.toLowerCase()
+          item.style.display = text.includes(keyword) ? '' : 'none'
+        }
+      })
+    })
+  }
+
+  // Set default handler
+  dropdown.addEventListener('click', function (e) {
+    var setBtn = e.target.closest(
+      '.saved-filters-dropdown__item-action--set-default',
+    )
+    var unsetBtn = e.target.closest(
+      '.saved-filters-dropdown__item-action--unset',
+    )
+
+    if (setBtn) {
+      var item = setBtn.closest('.saved-filters-dropdown__item')
+      setAsDefault(item)
+    }
+
+    if (unsetBtn) {
+      // Optionally handle unset - for now just remove default from this item
+      var item = unsetBtn.closest('.saved-filters-dropdown__item')
+      removeDefault(item)
+    }
+  })
+
+  function setAsDefault(newDefaultItem) {
+    var allItems = dropdown.querySelectorAll('.saved-filters-dropdown__item')
+
+    // Remove default from all items
+    allItems.forEach(function (item) {
+      removeDefault(item)
+    })
+
+    // Set new default
+    newDefaultItem.setAttribute('data-is-default', 'true')
+
+    // Add tag badge to header
+    var header = newDefaultItem.querySelector(
+      '.saved-filters-dropdown__item-header',
+    )
+    var existingTag = header.querySelector(
+      '.saved-filters-dropdown__tag-default',
+    )
+    if (!existingTag) {
+      var tag = document.createElement('span')
+      tag.className = 'saved-filters-dropdown__tag-default'
+      tag.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Mặc định'
+      header.appendChild(tag)
+    }
+
+    // Change "Mặc định" button to "Bỏ mặc định"
+    var meta = newDefaultItem.querySelector(
+      '.saved-filters-dropdown__item-meta',
+    )
+    var setDefaultBtn = meta.querySelector(
+      '.saved-filters-dropdown__item-action--set-default',
+    )
+    if (setDefaultBtn) {
+      setDefaultBtn.className =
+        'saved-filters-dropdown__item-action saved-filters-dropdown__item-action--unset'
+      setDefaultBtn.textContent = 'Bỏ mặc định'
+    }
+  }
+
+  function removeDefault(item) {
+    item.removeAttribute('data-is-default')
+
+    // Remove tag badge
+    var tag = item.querySelector('.saved-filters-dropdown__tag-default')
+    if (tag) tag.remove()
+
+    // Change "Bỏ mặc định" button to "Mặc định"
+    var meta = item.querySelector('.saved-filters-dropdown__item-meta')
+    var unsetBtn = meta
+      ? meta.querySelector('.saved-filters-dropdown__item-action--unset')
+      : null
+    if (unsetBtn) {
+      unsetBtn.className =
+        'saved-filters-dropdown__item-action saved-filters-dropdown__item-action--set-default'
+      unsetBtn.textContent = 'Mặc định'
+    }
+  }
+}
+
+function tableDetailDropdown() {
+  if (!$('.table-detail-dropdown').length) return
+
+  // Function to set dropdown width and position to match the visible area of table-container
+  function updateDropdownLayout(dropdown, container) {
+    if (!container) container = dropdown.closest('.table-container')[0]
+    if (container) {
+      var visibleWidth = container.clientWidth - 12
+      var scrollLeft = container.scrollLeft
+      dropdown[0].style.width = visibleWidth + 'px'
+      dropdown[0].style.maxWidth = visibleWidth + 'px'
+      dropdown[0].style.transform = 'translate3d(' + scrollLeft + 'px,0,0)'
+    }
+  }
+
+  // Throttled scroll handler using requestAnimationFrame
+  var scrollRafId = null
+  $('.table-container').on('scroll', function () {
+    var container = this
+    if (scrollRafId) return
+    scrollRafId = requestAnimationFrame(function () {
+      scrollRafId = null
+      var scrollLeft = container.scrollLeft
+      var dropdowns = container.querySelectorAll('.table-detail-dropdown')
+      for (var i = 0; i < dropdowns.length; i++) {
+        if (dropdowns[i].offsetParent !== null) {
+          dropdowns[i].style.transform = 'translate3d(' + scrollLeft + 'px,0,0)'
+        }
+      }
+    })
+  })
+
+  // Update all visible dropdowns on window resize
+  var resizeRafId = null
+  $(window).on('resize', function () {
+    if (resizeRafId) return
+    resizeRafId = requestAnimationFrame(function () {
+      resizeRafId = null
+      $('.table-detail-dropdown:visible').each(function () {
+        updateDropdownLayout($(this))
+      })
+    })
+  })
+
+  // Toggle dropdown on table-item click
+  $('.table-item')
+    .css('cursor', 'pointer')
+    .on('click', function () {
+      var dropdown = $(this).next('.table-detail-dropdown')
+      var isVisible = dropdown.is(':visible')
+
+      if (isVisible) {
+        dropdown.slideUp()
+        $(this).removeClass('!bg-[#e3f7ff]')
+      } else {
+        updateDropdownLayout(dropdown)
+        dropdown.slideDown()
+        $(this).addClass('!bg-[#e3f7ff]')
+      }
+    })
+
+  // Prevent click events inside the "Thao tác/Edit" column from toggling the row
+  $('.table-item .cell-btn-edit, .table-item .cell-btn-delete').on(
+    'click',
+    function (e) {
+      e.stopPropagation()
+    },
+  )
+}
+
 $(window).bind('load', function () {
   inputTogglePassword()
   checkVerifyOTP()
@@ -739,4 +935,6 @@ $(window).bind('load', function () {
   toggleDropdownFilter()
   fileDropzone()
   filterTable()
+  savedFiltersDropdown()
+  tableDetailDropdown()
 })

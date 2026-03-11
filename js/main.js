@@ -768,6 +768,32 @@ function savedFiltersDropdown() {
     })
   }
 
+  // Select item: fill title into trigger button
+  var triggerText = btn.querySelector('.saved-filters-trigger__text')
+  var allItems = dropdown.querySelectorAll('.saved-filters-dropdown__item')
+
+  allItems.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+      // Skip if clicking on action buttons (Xóa, Mặc định, Bỏ mặc định)
+      if (e.target.closest('.saved-filters-dropdown__item-action')) return
+
+      var title = item.querySelector('.saved-filters-dropdown__item-title')
+      if (title && triggerText) {
+        triggerText.textContent = title.textContent.trim()
+      }
+
+      // Mark selected item
+      allItems.forEach(function (el) {
+        el.classList.remove('active')
+      })
+      item.classList.add('active')
+
+      // Close dropdown
+      dropdown.style.display = 'none'
+      btn.classList.remove('active')
+    })
+  })
+
   // Set default handler
   dropdown.addEventListener('click', function (e) {
     var setBtn = e.target.closest(

@@ -420,6 +420,7 @@ function filterTable() {
         const dataAttr = $(el).data('attr')
 
         // Initialize Select2
+        const $modal = $(el).closest('.modal')
         $(el).select2({
           placeholder: dataAttr,
           minimumResultsForSearch: -1,
@@ -427,6 +428,7 @@ function filterTable() {
           // allowClear: true,
           templateResult: formatOption,
           templateSelection: formatSelection,
+          dropdownParent: $modal.length ? $modal : $(document.body),
         })
       })
     }

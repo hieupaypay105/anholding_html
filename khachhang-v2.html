@@ -2124,6 +2124,19 @@
                           placeholder="Nhập email"
                         />
                       </div>
+                      <!-- Ngày sinh -->
+                      <div class="col-span-1 flex flex-col gap-1">
+                        <label class="text-[12px] text-[#363636]"
+                          >Ngày sinh</label
+                        >
+                        <input
+                          type="text"
+                          id="modalEditNgaySinh"
+                          class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                          placeholder="Chọn ngày sinh"
+                          readonly
+                        />
+                      </div>
                       <!-- Tỉnh/ Thành -->
                       <div class="col-span-1 flex flex-col gap-1">
                         <label class="text-[12px] text-[#363636]"
@@ -2142,6 +2155,18 @@
                           <option value="bd">Bình Dương</option>
                           <option value="hp">Hải Phòng</option>
                         </select>
+                      </div>
+                      <!-- Địa chỉ -->
+                      <div class="col-span-1 flex flex-col gap-1">
+                        <label class="text-[12px] text-[#363636]"
+                          >Địa chỉ</label
+                        >
+                        <input
+                          type="text"
+                          id="modalEditDiaChi"
+                          class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
+                          placeholder="Nhập địa chỉ"
+                        />
                       </div>
                       <!-- Nhóm KH -->
                       <div class="col-span-1 flex flex-col gap-1">
@@ -2244,6 +2269,7 @@
                           id="modalEditLichTuongTac"
                           class="w-full bg-[rgba(255,255,255,0.25)] border border-[#ededf6] rounded-[8px] h-[40px] px-3 !text-[12px] text-[#363636] placeholder:text-[#909090] outline-none"
                           placeholder="Chọn ngày"
+                          readonly
                         />
                       </div>
                       <!-- Nguồn -->
@@ -2533,6 +2559,24 @@
             allowInput: true,
             clickOpens: true,
             theme: 'default',
+          })
+        }
+
+        // Initialize Flatpickr for modal "Ngày sinh" field
+        if (document.getElementById('modalEditNgaySinh')) {
+          flatpickr('#modalEditNgaySinh', {
+            locale: 'vn',
+            dateFormat: 'd/m/Y',
+            allowInput: false,
+          })
+        }
+
+        // Initialize Flatpickr for modal "Lịch tương tác" field
+        if (document.getElementById('modalEditLichTuongTac')) {
+          flatpickr('#modalEditLichTuongTac', {
+            locale: 'vn',
+            dateFormat: 'd/m/Y',
+            allowInput: false,
           })
         }
 

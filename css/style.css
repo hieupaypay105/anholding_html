@@ -21065,4 +21065,11 @@ label.error {
   color: #363636;
   padding: 8px;
   resize: vertical;
+}
+
+.select2-container .select2-selection--single {
+  padding: 0 !important;
+}
+.select2-container .select2-selection__arrow {
+  display: none !important;
 }/*# sourceMappingURL=style.css.map */

@@ -550,3 +550,13 @@
     resize: vertical;
   }
 }
+
+.select2-container {
+  .select2-selection--single {
+    padding: 0 !important;
+  }
+
+  .select2-selection__arrow {
+    display: none !important;
+  }
+}

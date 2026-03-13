@@ -612,12 +612,13 @@ function fileDropzone() {
         var myDropzone = this
 
         // Handle the upload button click
-        document
-          .getElementById('uploadBtn')
-          .addEventListener('click', function () {
+        var uploadBtn = document.getElementById('uploadBtn')
+        if (uploadBtn) {
+          uploadBtn.addEventListener('click', function () {
             console.log('object')
             myDropzone.processQueue() // Process the queue to upload files
           })
+        }
 
         // When the modal is closed, clear the Dropzone queue
         $('#modalImportFile').on('hidden.bs.modal', function () {
@@ -625,6 +626,36 @@ function fileDropzone() {
           console.log('object')
         })
       },
+    }
+
+    // Khởi tạo cho Dropzone Khách Hàng (nếu có)
+    if ($('#myDropzoneKhachHang').length > 0) {
+      Dropzone.options.myDropzoneKhachHang = {
+        url: '/upload', // URL to which files will be uploaded
+        autoProcessQueue: false, // Prevent Dropzone from uploading automatically
+        addRemoveLinks: true, // Allow removal of files
+        maxFiles: 1, // Maximum number of files
+        maxFilesize: 1,
+        acceptedFiles: '.xls,.xlsx', // Allowed file types
+        init: function () {
+          var dz = this
+
+          // Handle the upload button click
+          var uploadBtn = document.getElementById('uploadBtnKhachHang')
+          if (uploadBtn) {
+            uploadBtn.addEventListener('click', function () {
+              console.log('object')
+              dz.processQueue() // Process the queue to upload files
+            })
+          }
+
+          // When the modal is closed, clear the Dropzone queue
+          $('#modalImportKhachHang').on('hidden.bs.modal', function () {
+            dz.removeAllFiles() // Clear all files in the Dropzone
+            console.log('object')
+          })
+        },
+      }
     }
   }
 }

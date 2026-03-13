@@ -848,7 +848,7 @@
                         <div class="swiper-slide !w-auto !overflow-visible">
                           <button
                             type="button"
-                            class="khv2-chip !relative !overflow-visible khv2-chip--green active"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--green"
                           >
                             Mới
                           </button>
@@ -868,7 +868,7 @@
                         <div class="swiper-slide !w-auto !overflow-visible">
                           <button
                             type="button"
-                            class="khv2-chip !relative !overflow-visible khv2-chip--blue"
+                            class="khv2-chip !relative !overflow-visible khv2-chip--blue active"
                           >
                             Đang tư vấn
                             <span
@@ -999,6 +999,20 @@
                       <span
                         class="text-white text-[14px] font-bold max-md:hidden"
                         >Thêm mới</span
+                      >
+                    </button>
+                  </div>
+
+                  <div class="shrink-0 h-full">
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalImportKhachHang"
+                      class="w-full justify-center inline-flex items-center gap-2 !rounded-[8px] !bg-[#3F8CFE] md:!px-3 !h-[36px] max-md:!w-[36px] max-md:!h-[36px] hover:!bg-[#18478D] transition-colors border-none"
+                    >
+                      <span
+                        class="text-white text-[14px] font-bold max-md:hidden"
+                        >Import</span
                       >
                     </button>
                   </div>
@@ -2054,6 +2068,111 @@
                           />
                         </svg>
                       </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal import khách hàng -->
+            <div class="modal fade" id="modalImportKhachHang">
+              <div class="modal-dialog modal-dialog-centered !max-w-[410px]">
+                <div
+                  class="modal-content !border-0 !rounded-[12px] p-[60px_24px_30px]"
+                >
+                  <button
+                    type="button"
+                    data-bs-dismiss="modal"
+                    class="absolute z-10 top-4 right-4"
+                  >
+                    <img
+                      src="images/asset/material-symbols_close-rounded.svg"
+                      alt=""
+                    />
+                  </button>
+
+                  <div class="block">
+                    <div
+                      class="text-center !mb-7 text-[#363636] text-[14px] font-bold uppercase"
+                    >
+                      import khách hàng
+                    </div>
+
+                    <div
+                      class="mb-5 bg-[rgba(242,_222,_222,_0.25)] border border-solid border-[#EDEDF6] rounded-[8px] p-3 ps-6"
+                    >
+                      <div class="flex items-center gap-6">
+                        <div class="flex-shrink-0 icon">
+                          <img
+                            src="images/asset/icon-park-outline_attention.svg"
+                            alt=""
+                          />
+                        </div>
+
+                        <div class="grow">
+                          <ul class="p-0 m-0">
+                            <li
+                              class="!list-disc !list-inside text-[#363636] text-[12px]/[24px] font-normal"
+                            >
+                              Chỉ được tải 1 tệp duy nhất / lần
+                            </li>
+                            <li
+                              class="!list-disc !list-inside text-[#363636] text-[12px]/[24px] font-normal"
+                            >
+                              Chỉ chấp nhận tệp dưới định dạng excel
+                            </li>
+                            <li
+                              class="!list-disc !list-inside text-[#363636] text-[12px]/[24px] font-normal"
+                            >
+                              Số lượng bản ghi tối đa / tệp: 1000 bản ghi
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="blockUploadFileKhachHang" class="mb-7">
+                      <form
+                        action="/upload"
+                        id="myDropzoneKhachHang"
+                        class="dropzone flex flex-col items-center justify-center min-h-[182px] p-4 !border !border-dashed !border-[#464661] bg-[#fbfbfb] rounded-[8px]"
+                      >
+                        <div class="text-center dz-message">
+                          <div class="text-center icon mb-2.5">
+                            <img
+                              src="images/asset/icon-park-outline_upload-one.svg"
+                              alt=""
+                              class="m-auto"
+                            />
+                          </div>
+
+                          <div class="text-[#363636] text-[14px] font-semibold">
+                            Kéo thả tệp vào đây
+                          </div>
+
+                          <div
+                            class="text-[#909090] text-[12px] font-normal italic py-2"
+                          >
+                            hoặc
+                          </div>
+
+                          <div
+                            class="cursor-pointer text-[#1B4DEA] text-[14px] font-semibold underline"
+                          >
+                            Chọn tệp tại đây
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="text-center">
+                      <button
+                        id="uploadBtnKhachHang"
+                        type="button"
+                        class="inline-flex items-center !p-[5px_30px] !bg-[#3F8CFE] !rounded-[8px] text-[#fff] text-[16px] font-bold"
+                      >
+                        Xác nhận
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -88,6 +88,10 @@ function checkSidebar() {
     const rootTotal = sidebarWidth + pad
 
     root.style.marginLeft = rootTotal + 'px'
+    root.style.width = `calc(100% - ${rootTotal}px)`
+  } else if (root) {
+    root.style.marginLeft = '0px'
+    root.style.width = '100%'
   }
 }
 
@@ -123,14 +127,17 @@ function toggleMobile() {
 
     btn.addEventListener('click', () => {
       if (sidebar.classList.contains('isTranslate')) {
-        layout.style.marginLeft = sidebar.offsetWidth + 24 + 'px'
-        layout.style.transition = 'margin .2s'
+        const rootTotal = sidebar.offsetWidth + 24
+        layout.style.marginLeft = rootTotal + 'px'
+        layout.style.width = `calc(100% - ${rootTotal}px)`
+        layout.style.transition = 'margin .2s, width .2s'
         sidebar.style.transform = 'translateX(0%)'
         sidebar.style.transition = 'transform .2s'
         sidebar.classList.remove('isTranslate')
       } else {
         layout.style.marginLeft = 0
-        layout.style.transition = 'margin .2s'
+        layout.style.width = '100%'
+        layout.style.transition = 'margin .2s, width .2s'
         sidebar.style.transform = 'translateX(-150%)'
         sidebar.style.transition = 'transform .2s'
         sidebar.classList.add('isTranslate')
@@ -1011,4 +1018,9 @@ $(window).bind('load', function () {
   filterTable()
   savedFiltersDropdown()
   tableDetailDropdown()
+
+  // Update layout when window resizes
+  $(window).on('resize', function () {
+    checkSidebar()
+  })
 })

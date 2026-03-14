@@ -139,8 +139,12 @@
 //   background: rgba(255, 255, 255, 0.6) !important;
 // }
 
+#data_grid {
+  height: auto !important;
+}
+
 .table-magic {
-  height: 100%;
+  height: auto;
   overflow: hidden;
 
   @media (min-width: 768px) {

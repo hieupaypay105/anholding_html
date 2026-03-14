@@ -83,7 +83,7 @@ function checkSidebar() {
   const root = document.getElementById('RootLayout')
   const pad = 24
 
-  if (sidebar && screen.width >= 1280) {
+  if (sidebar && window.innerWidth >= 1280) {
     const sidebarWidth = sidebar.clientWidth
     const rootTotal = sidebarWidth + pad
 
@@ -97,7 +97,7 @@ function sidebarMobile() {
   const btn = document.getElementById('btnSidebar')
   const btnClose = document.getElementById('btnSidebar-mb')
 
-  if (screen.width < 1280) {
+  if (window.innerWidth < 1280) {
     btn.addEventListener('click', () => {
       sidebar.classList.toggle('is-open')
 
@@ -116,7 +116,7 @@ function sidebarMobile() {
 }
 
 function toggleMobile() {
-  if (screen.width >= 1280) {
+  if (window.innerWidth >= 1280) {
     const btn = document.getElementById('btnSidebar')
     const layout = document.getElementById('RootLayout')
     const sidebar = document.getElementById('Sidebar')
@@ -728,7 +728,7 @@ function mobileDropFilters() {
   const btn = document.getElementById('btnDropFilterLg')
   const drop = document.getElementById('mbDropFilters')
 
-  if (screen.width < 768 && drop) {
+  if (window.innerWidth < 768 && drop) {
     btn.addEventListener('click', () => {
       if (drop.classList.contains('hidden')) {
         drop.classList.remove('hidden')
@@ -915,11 +915,26 @@ function tableDetailDropdown() {
   function updateDropdownLayout(dropdown, container) {
     if (!container) container = dropdown.closest('.table-container')[0]
     if (container) {
-      var visibleWidth = container.clientWidth - 12
-      var scrollLeft = container.scrollLeft
-      dropdown[0].style.width = visibleWidth + 'px'
-      dropdown[0].style.maxWidth = visibleWidth + 'px'
-      dropdown[0].style.transform = 'translate3d(' + scrollLeft + 'px,0,0)'
+      // clientWidth includes padding. The table-container has 10px padding on each side.
+      // So the actual visible content area is clientWidth - 20.
+      var visibleWidth = container.clientWidth - 20
+      var scrollLeft = Math.max(0, container.scrollLeft)
+
+      // The dropdown background and border should stretch naturally for the full 1300px row width
+      dropdown[0].style.width = '100%'
+      dropdown[0].style.maxWidth = 'none'
+      dropdown[0].style.transform = 'none'
+
+      // But we move the inner content wrapper to match the viewport horizontally
+      var inner = dropdown.children().first()
+      if (inner.length) {
+        // Because dropdown has p-2 (padding 8px on left and right), the inner content naturally gets 354px width
+        // and its left origin is 8px.
+        var innerWidth = visibleWidth - 16
+        inner[0].style.width = innerWidth + 'px'
+        inner[0].style.maxWidth = innerWidth + 'px'
+        inner[0].style.transform = 'translate3d(' + scrollLeft + 'px,0,0)'
+      }
     }
   }
 

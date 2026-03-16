@@ -20117,7 +20117,7 @@ label.error {
 }
 @media (min-width: 1680px) {
   .table-magic .table-container .table-row.body {
-    max-height: 350px;
+    max-height: 300px;
   }
 }
 .table-magic .table-container .table-item {

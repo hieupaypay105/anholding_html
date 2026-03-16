@@ -240,7 +240,7 @@
                     </span>
                     <input
                       type="text"
-                      class="flex-1 border-0 outline-none text-[12px] text-[#363636] bg-transparent h-full px-1"
+                      class="flex-1 border-0 outline-none !text-[12px] text-[#363636] bg-transparent h-full px-1"
                       placeholder="Tìm tên, số điện thoại khách hàng"
                     />
 
@@ -274,7 +274,8 @@
                         <line x1="9" y1="8" x2="15" y2="8"></line>
                         <line x1="17" y1="16" x2="23" y2="16"></line>
                       </svg>
-                      <span class="text-[#363636] text-[12px] font-normal"
+                      <span
+                        class="text-[#363636] text-[12px] font-normal max-md:hidden"
                         >Bộ lọc</span
                       >
                     </button>
@@ -742,7 +743,7 @@
               </div>
 
               <!-- Main content area (theo cấu trúc banghang.html) -->
-              <div class="h-full flex flex-col">
+              <div class="h-full flex flex-col flex-1">
                 <!-- Status chips -->
                 <div
                   class="khv2-status flex flex-wrap lg:flex-nowrap items-center gap-2 !mb-3 w-full"

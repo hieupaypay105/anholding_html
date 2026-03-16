@@ -5,6 +5,7 @@
   @media (max-width: 1279px) {
     & > * {
       height: 100% !important;
+      min-height: calc(100vh - 48px) !important;
     }
   }
   @media (max-width: 767px) {

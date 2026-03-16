@@ -20061,12 +20061,8 @@ label.error {
 }
 @media (min-width: 768px) {
   .table-magic {
-    margin-bottom: 1.5rem;
-  }
-}
-@media (max-width: 1279px) {
-  .table-magic {
     height: 100%;
+    margin-bottom: 1.5rem;
   }
 }
 .table-magic .table-container {
@@ -20074,11 +20070,7 @@ label.error {
   border-radius: 12px;
   background: #fff;
   padding: 10px;
-}
-@media (max-width: 1279px) {
-  .table-magic .table-container {
-    height: 100%;
-  }
+  height: 100%;
 }
 .table-magic .table-container .table-row {
   position: relative;
@@ -20108,17 +20100,6 @@ label.error {
   display: flex;
   flex-flow: column;
   gap: 4px;
-  max-height: 350px;
-}
-@media (min-width: 1280px) {
-  .table-magic .table-container .table-row.body {
-    max-height: 200px;
-  }
-}
-@media (min-width: 1680px) {
-  .table-magic .table-container .table-row.body {
-    max-height: 300px;
-  }
 }
 .table-magic .table-container .table-item {
   display: flex;

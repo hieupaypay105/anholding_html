@@ -148,11 +148,8 @@
   overflow: hidden;
 
   @media (min-width: 768px) {
-    margin-bottom: 1.5rem;
-  }
-
-  @media (max-width: 1279px) {
     height: 100%;
+    margin-bottom: 1.5rem;
   }
 
   // &::-webkit-scrollbar-track {
@@ -175,10 +172,7 @@
     border-radius: 12px;
     background: #fff;
     padding: 10px;
-
-    @media (max-width: 1279px) {
-      height: 100%;
-    }
+    height: 100%;
 
     // &::-webkit-scrollbar-track {
     //   border-radius: 10px;
@@ -225,15 +219,15 @@
         display: flex;
         flex-flow: column;
         gap: 4px;
-        max-height: 350px;
+        // max-height: 350px;
 
-        @media (min-width: 1280px) {
-          max-height: 200px;
-        }
+        // @media (min-width: 1280px) {
+        //   max-height: 200px;
+        // }
 
-        @media (min-width: 1680px) {
-          max-height: 300px;
-        }
+        // @media (min-width: 1680px) {
+        //   max-height: 350px;
+        // }
       }
     }
 

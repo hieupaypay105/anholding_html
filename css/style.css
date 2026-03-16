@@ -20051,10 +20051,6 @@ label.error {
   padding: 4px 12px !important;
 }
 
-#data_grid {
-  height: auto !important;
-}
-
 .table-magic {
   height: auto;
   overflow: hidden;

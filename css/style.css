@@ -20061,8 +20061,12 @@ label.error {
 }
 @media (min-width: 768px) {
   .table-magic {
-    height: 100%;
     margin-bottom: 1.5rem;
+  }
+}
+@media (max-width: 1279px) {
+  .table-magic {
+    height: 100%;
   }
 }
 .table-magic .table-container {
@@ -20070,7 +20074,11 @@ label.error {
   border-radius: 12px;
   background: #fff;
   padding: 10px;
-  height: 100%;
+}
+@media (max-width: 1279px) {
+  .table-magic .table-container {
+    height: 100%;
+  }
 }
 .table-magic .table-container .table-row {
   position: relative;

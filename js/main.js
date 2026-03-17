@@ -290,10 +290,10 @@ function filterTable() {
       var maxVal = $('#priceSlider').slider('values', 1)
       alert(
         'Giá từ: ' +
-          minVal.toLocaleString() +
-          ' VND\nGiá đến: ' +
-          maxVal.toLocaleString() +
-          ' VND',
+        minVal.toLocaleString() +
+        ' VND\nGiá đến: ' +
+        maxVal.toLocaleString() +
+        ' VND',
       )
     })
 
@@ -464,13 +464,13 @@ function filterTable() {
 
     var $option = $(
       '<div class="checkbox-container ' +
-        selectedClass +
-        '">' +
-        '<span class="checkbox"></span>' +
-        '<span>' +
-        option.text +
-        '</span>' +
-        '</div>',
+      selectedClass +
+      '">' +
+      '<span class="checkbox"></span>' +
+      '<span>' +
+      option.text +
+      '</span>' +
+      '</div>',
     )
 
     return $option
@@ -593,6 +593,9 @@ function toggleDropdownFilter() {
             $checkAll.prop('checked', false)
             $checkAll[0].indeterminate = true
           }
+
+          // Ẩn hiện cột
+          collapseFields();
         })
     }
   }
@@ -669,12 +672,23 @@ function fileDropzone() {
 
 function tableMagic() {
   if ($('#tableMagic') && $('#tableMagic').length > 0) {
+    const headerElement = document.querySelector('.header')
     const headerCells = document.querySelectorAll('.header .cell')
     const bodyRows = document.querySelectorAll('.table-item')
-    const allRows = [document.querySelector('.header'), ...bodyRows]
+    const allRows = [headerElement, ...bodyRows].filter(Boolean)
 
     // Tính toán độ rộng tối đa của từng cột
-    const columnWidths = Array.from(headerCells).map((cell) => cell.scrollWidth)
+    const columnWidths = []
+
+    if (headerCells.length > 0) {
+      Array.from(headerCells).forEach((cell) => {
+        columnWidths.push(cell.scrollWidth)
+      })
+    } else if (allRows.length > 0) {
+      allRows[0].querySelectorAll('.cell').forEach((cell) => {
+        columnWidths.push(cell.scrollWidth)
+      })
+    }
 
     allRows.forEach((row) => {
       const cells = row.querySelectorAll('.cell')
@@ -694,6 +708,20 @@ function tableMagic() {
         cell.style.minWidth = `${columnWidths[index]}px`
       })
     })
+
+    const setTableHeight = () => {
+      if (window.innerWidth <= 768) {
+        const offsetTop = $('#tableMagic').offset().top;
+        const paginationHeight = $('.tb-pagination').length ? $('.tb-pagination').outerHeight() : 0;
+        const availableHeight = window.innerHeight - offsetTop - paginationHeight - 20;
+        $('#tableMagic').css('height', availableHeight + 'px');
+      } else {
+        $('#tableMagic').css('height', 'auto');
+      }
+    };
+
+    setTableHeight();
+    $(window).off('resize.tableMagic').on('resize.tableMagic', setTableHeight);
   }
 }
 
@@ -735,8 +763,9 @@ function mobileDropFilters() {
   const btn = document.getElementById('btnDropFilterLg')
   const drop = document.getElementById('mbDropFilters')
 
-  if (window.innerWidth < 768 && drop) {
-    btn.addEventListener('click', () => {
+  if (btn && drop) {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation()
       if (drop.classList.contains('hidden')) {
         drop.classList.remove('hidden')
       } else {
@@ -746,8 +775,21 @@ function mobileDropFilters() {
 
     // Đóng dropdown khi click ra ngoài
     document.addEventListener('click', (e) => {
+      // Bỏ qua nếu click vào các phần tử của Select2 (dropdown list, search box, results...)
+      var isSelect2Click =
+        e.target.closest('.select2-container') ||
+        e.target.closest('.select2-dropdown') ||
+        e.target.closest('.select2-results')
+      // Bỏ qua nếu click vào calendar của flatpickr (render ngoài DOM của dropdown)
+      var isFlatpickrClick = e.target.closest('.flatpickr-calendar')
+
       // Kiểm tra xem click có xảy ra bên ngoài btn và dropdown hay không
-      if (!btn.contains(e.target) && !drop.contains(e.target)) {
+      if (
+        !btn.contains(e.target) &&
+        !drop.contains(e.target) &&
+        !isSelect2Click &&
+        !isFlatpickrClick
+      ) {
         drop.classList.add('hidden')
       }
     })
@@ -975,21 +1017,21 @@ function tableDetailDropdown() {
   })
 
   // Toggle dropdown on table-item click
-  $('.table-item')
-    .css('cursor', 'pointer')
-    .on('click', function () {
-      var dropdown = $(this).next('.table-detail-dropdown')
-      var isVisible = dropdown.is(':visible')
+  // $('.table-item')
+  //   .css('cursor', 'pointer')
+  //   .on('click', function () {
+  //     var dropdown = $(this).next('.table-detail-dropdown')
+  //     var isVisible = dropdown.is(':visible')
 
-      if (isVisible) {
-        dropdown.slideUp()
-        $(this).removeClass('!bg-[#e3f7ff]')
-      } else {
-        updateDropdownLayout(dropdown)
-        dropdown.slideDown()
-        $(this).addClass('!bg-[#e3f7ff]')
-      }
-    })
+  //     if (isVisible) {
+  //       dropdown.slideUp()
+  //       $(this).removeClass('!bg-[#e3f7ff]')
+  //     } else {
+  //       updateDropdownLayout(dropdown)
+  //       dropdown.slideDown()
+  //       $(this).addClass('!bg-[#e3f7ff]')
+  //     }
+  //   })
 
   // Prevent click events inside the "Thao tác/Edit" column from toggling the row
   $('.table-item .cell-btn-edit, .table-item .cell-btn-delete').on(
@@ -998,6 +1040,27 @@ function tableDetailDropdown() {
       e.stopPropagation()
     },
   )
+}
+
+function dataGridHeight() {
+  if ($('#data_grid') && $('#data_grid').length > 0) {
+    const setGridHeight = () => {
+      if (window.innerWidth > 768) {
+        const offsetTop = $('#data_grid').offset().top;
+        const availableHeight = window.innerHeight - offsetTop - 20;
+        $('#data_grid').css('height', availableHeight + 'px');
+        $('#data_grid').css('display', 'flex');
+        $('#data_grid').css('flex-direction', 'column');
+      } else {
+        $('#data_grid').css('height', '');
+        $('#data_grid').css('display', '');
+        $('#data_grid').css('flex-direction', '');
+      }
+    };
+
+    setGridHeight();
+    $(window).off('resize.dataGrid').on('resize.dataGrid', setGridHeight);
+  }
 }
 
 $(window).bind('load', function () {
@@ -1018,9 +1081,12 @@ $(window).bind('load', function () {
   filterTable()
   savedFiltersDropdown()
   tableDetailDropdown()
+  dataGridHeight()
 
   // Update layout when window resizes
   $(window).on('resize', function () {
     checkSidebar()
   })
 })
+
+
